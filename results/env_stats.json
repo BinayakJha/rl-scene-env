@@ -1,0 +1,250 @@
+{
+ "dataset": {
+  "train": 2000,
+  "test": 300,
+  "train_kinds": {
+   "spatial": 1498,
+   "abstract": 502
+  },
+  "test_kinds": {
+   "abstract": 76,
+   "spatial": 224
+  },
+  "test_treatments": {
+   "chart": 15,
+   "object": 232,
+   "comparison": 14,
+   "process": 14,
+   "hold": 25
+  },
+  "train_treatments": {
+   "object": 1573,
+   "comparison": 85,
+   "chart": 106,
+   "hold": 138,
+   "process": 98
+  }
+ },
+ "obs_train": {
+  "words_mean": 7.03,
+  "words_min": 3,
+  "words_max": 13,
+  "chars_mean": 32.4,
+  "chars_max": 62,
+  "unique_words": 156
+ },
+ "obs_test": {
+  "words_mean": 7.89,
+  "words_min": 3,
+  "words_max": 12,
+  "chars_mean": 39.4,
+  "chars_max": 60,
+  "unique_words": 110
+ },
+ "gold_action_chars_test": {
+  "mean": 122.2,
+  "min": 33,
+  "max": 168
+ },
+ "test_words_unseen_in_train": 68,
+ "gold_action_qwen_tokens": {
+  "mean": 33.9,
+  "max": 45,
+  "vocab": 151665
+ },
+ "replay_saved_summary_total": {
+  "base_qwen0.5b": 0.4871,
+  "sft_qwen0.5b": 0.9975
+ },
+ "policies": {
+  "random": {
+   "n": 300,
+   "reward_mean": 0.2727,
+   "reward_std": 0.2106,
+   "reward_min": 0.15,
+   "reward_max": 1.0,
+   "hist_counts": [
+    0,
+    206,
+    0,
+    0,
+    62,
+    0,
+    4,
+    22,
+    0,
+    6
+   ],
+   "components": {
+    "format": 1.0,
+    "count": 0.0933,
+    "relation": 0.16,
+    "treatment": 0.1867,
+    "length_penalty": 0.0,
+    "total": 0.2727,
+    "exact": 0.02
+   },
+   "action_chars_mean": 99.2,
+   "action_chars_max": 205,
+   "spatial_mean": 0.1958,
+   "spatial_n": 224,
+   "abstract_mean": 0.4993,
+   "abstract_n": 76
+  },
+  "heuristic": {
+   "n": 300,
+   "reward_mean": 0.8978,
+   "reward_std": 0.2392,
+   "reward_min": 0.15,
+   "reward_max": 1.0,
+   "hist_counts": [
+    0,
+    23,
+    0,
+    0,
+    0,
+    14,
+    0,
+    22,
+    0,
+    241
+   ],
+   "components": {
+    "format": 1.0,
+    "count": 0.9078,
+    "relation": 0.8767,
+    "treatment": 0.85,
+    "length_penalty": 0.0,
+    "total": 0.8978,
+    "exact": 0.8033
+   },
+   "action_chars_mean": 121.5,
+   "action_chars_max": 185,
+   "spatial_mean": 0.8877,
+   "spatial_n": 224,
+   "abstract_mean": 0.9276,
+   "abstract_n": 76
+  },
+  "oracle_gold": {
+   "n": 300,
+   "reward_mean": 1.0,
+   "reward_std": 0.0,
+   "reward_min": 1.0,
+   "reward_max": 1.0,
+   "hist_counts": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    300
+   ],
+   "components": {
+    "format": 1.0,
+    "count": 1.0,
+    "relation": 1.0,
+    "treatment": 1.0,
+    "length_penalty": 0.0,
+    "total": 1.0,
+    "exact": 1.0
+   },
+   "action_chars_mean": 135.6,
+   "action_chars_max": 185,
+   "spatial_mean": 1.0,
+   "spatial_n": 224,
+   "abstract_mean": 1.0,
+   "abstract_n": 76
+  },
+  "base_qwen0.5b": {
+   "n": 300,
+   "reward_mean": 0.4872,
+   "reward_std": 0.2644,
+   "reward_min": 0.075,
+   "reward_max": 1.0,
+   "hist_counts": [
+    39,
+    6,
+    30,
+    6,
+    115,
+    11,
+    24,
+    41,
+    0,
+    28
+   ],
+   "components": {
+    "format": 0.7517,
+    "count": 0.5308,
+    "relation": 0.2533,
+    "treatment": 0.5567,
+    "length_penalty": 0.0,
+    "total": 0.4872,
+    "exact": 0.0933
+   },
+   "action_chars_mean": 74.5,
+   "action_chars_max": 222,
+   "spatial_mean": 0.3691,
+   "spatial_n": 224,
+   "abstract_mean": 0.8352,
+   "abstract_n": 76
+  },
+  "sft_qwen0.5b": {
+   "n": 300,
+   "reward_mean": 0.9975,
+   "reward_std": 0.0249,
+   "reward_min": 0.75,
+   "reward_max": 1.0,
+   "hist_counts": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    3,
+    0,
+    297
+   ],
+   "components": {
+    "format": 1.0,
+    "count": 1.0,
+    "relation": 1.0,
+    "treatment": 0.99,
+    "length_penalty": 0.0,
+    "total": 0.9975,
+    "exact": 0.99
+   },
+   "action_chars_mean": 122.2,
+   "action_chars_max": 168,
+   "spatial_mean": 1.0,
+   "spatial_n": 224,
+   "abstract_mean": 0.9901,
+   "abstract_n": 76
+  }
+ },
+ "per_prompt_variance": {
+  "random": {
+   "K": 8,
+   "mean_within_prompt_var": 0.026,
+   "between_prompt_var_of_means": 0.0182,
+   "frac_groups_zero_variance": 0.14
+  },
+  "heuristic_eps0.3": {
+   "K": 8,
+   "mean_within_prompt_var": 0.0221,
+   "between_prompt_var_of_means": 0.0414,
+   "frac_groups_zero_variance": 0.0867
+  }
+ },
+ "token_env_gold_char_episode": {
+  "len_mean": 136.6,
+  "len_max": 186,
+  "reward_mean": 1.0
+ }
+}
