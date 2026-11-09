@@ -1,0 +1,30 @@
+{
+ "random": {
+  "episodes": 2000,
+  "failures": 1912,
+  "stopped_early": 680,
+  "out_of_budget": 1232,
+  "wasted_actions_per_episode": 1.887
+ },
+ "planner": {
+  "episodes": 2000,
+  "failures": 34,
+  "stopped_early": 14,
+  "out_of_budget": 20,
+  "wasted_actions_per_episode": 0.0
+ },
+ "bc": {
+  "episodes": 6000,
+  "failures": 1064,
+  "stopped_early": 451,
+  "out_of_budget": 613,
+  "wasted_actions_per_episode": 0.292
+ },
+ "ppo": {
+  "episodes": 6000,
+  "failures": 643,
+  "stopped_early": 327,
+  "out_of_budget": 316,
+  "wasted_actions_per_episode": 0.16283333333333333
+ }
+}

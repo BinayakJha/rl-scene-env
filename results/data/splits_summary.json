@@ -1,0 +1,14 @@
+{
+ "val": {
+  "scenes": 300,
+  "templates": 243
+ },
+ "test": {
+  "scenes": 500,
+  "templates": 420
+ },
+ "train_check": {
+  "scenes": 300,
+  "templates": 284
+ }
+}

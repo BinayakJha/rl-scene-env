@@ -1,0 +1,27 @@
+{
+ "quick": false,
+ "seconds": {
+  "tests": 2.7269906997680664,
+  "training": 1021.3754904270172,
+  "evaluation": 55.3253710269928,
+  "figures": 5.1635236740112305,
+  "total": 1085.7626039981842
+ },
+ "settings": {
+  "seeds": [
+   0,
+   1,
+   2
+  ],
+  "val_scenes": 300,
+  "test_scenes": 500,
+  "train_check_scenes": 300,
+  "test_rollouts": 4,
+  "ppo_steps": 3000000,
+  "ppo_eval_every": 25,
+  "bc_demo_episodes": 6000,
+  "bc_epochs": 60,
+  "ablation_ppo_steps": 2000000,
+  "parallel_jobs": 7
+ }
+}

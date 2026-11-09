@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<title>Full Understanding of the Code: Budgeted Stochastic Scene Repair</title>
+<style>
+@page { size: Letter; margin: 16mm 15mm 16mm 15mm; }
+:root { --ink:#1f2933; --soft:#52606d; --line:#e4e7eb; --blue:#2f6fb3; --green:#3f8f6b; --orange:#d9822b; --bg:#f7f9fb; }
+* { box-sizing: border-box; }
+body { font-family: "IBM Plex Sans", "DejaVu Sans", sans-serif; color: var(--ink); font-size: 10.6pt; line-height: 1.5; margin: 0; }
+h1 { font-size: 25pt; margin: 0 0 4px; letter-spacing: -0.5px; }
+h2 { font-size: 16pt; margin: 26px 0 8px; padding-bottom: 4px; border-bottom: 2px solid var(--blue); color: #12355b; break-after: avoid; }
+h2 .num { color: var(--blue); margin-right: 8px; }
+h3 { font-size: 12pt; margin: 18px 0 6px; color: #12355b; break-after: avoid; }
+p { margin: 6px 0; }
+code { font-family: "IBM Plex Mono", monospace; font-size: 9pt; background: #eef2f7; padding: 1px 4px; border-radius: 3px; }
+pre.code { font-family: "IBM Plex Mono", monospace; font-size: 8.3pt; line-height: 1.42; background: #0f1b2a; color: #e6edf3; padding: 10px 12px 10px; border-radius: 8px; white-space: pre-wrap; break-inside: avoid; margin: 8px 0; }
+pre.code .where { color: #8fb3d9; font-size: 7.6pt; margin-bottom: 4px; border-bottom: 1px solid #2a3b50; padding-bottom: 3px; }
+pre.code .c { color: #7fc8a9; font-style: italic; }
+pre.code .k { color: #ff9e64; }
+pre.code .s { color: #f4d58d; }
+pre.plain { font-family: "IBM Plex Mono", monospace; font-size: 8.8pt; background: var(--bg); border: 1px solid var(--line); padding: 8px 12px; border-radius: 6px; white-space: pre-wrap; break-inside: avoid; }
+.cover { height: 245mm; display: flex; flex-direction: column; justify-content: center; }
+.cover .kicker { color: var(--blue); font-weight: 600; letter-spacing: 2px; text-transform: uppercase; font-size: 9.5pt; }
+.cover .sub { font-size: 14pt; color: var(--soft); margin: 4px 0 18px; }
+.cover .meta { color: var(--soft); font-size: 10pt; }
+.toc { margin-top: 28px; columns: 2; font-size: 10pt; }
+.toc div { margin: 3px 0; }
+.page-break { break-before: page; }
+.box { border-radius: 8px; padding: 10px 14px; margin: 10px 0; break-inside: avoid; }
+.box.idea { background: #eaf2fb; border-left: 5px solid var(--blue); }
+.box.say { background: #eaf6ef; border-left: 5px solid var(--green); }
+.box.warn { background: #fdf1e5; border-left: 5px solid var(--orange); }
+.box .title { font-weight: 700; margin-bottom: 4px; }
+table { border-collapse: collapse; width: 100%; margin: 8px 0; font-size: 9.4pt; break-inside: avoid; }
+th, td { border-bottom: 1px solid var(--line); padding: 5px 7px; text-align: left; vertical-align: top; }
+th { background: #f0f4f8; font-weight: 600; }
+table.res td, table.res th { text-align: center; } table.res td:first-child, table.res th:first-child { text-align: left; }
+table.small { font-size: 8.8pt; }
+table.files { font-size: 8.4pt; break-inside: auto; } table.files td:nth-child(2) { text-align: right; color: var(--soft); }
+.ci { color: var(--soft); font-size: 8pt; }
+figure { margin: 10px 0; text-align: center; break-inside: avoid; }
+figure img { max-width: 100%; }
+figcaption { font-size: 8.8pt; color: var(--soft); margin-top: 3px; }
+.notes { margin: 4px 0 12px 0; padding-left: 18px; }
+.notes li { margin: 2px 0; }
+.two { display: flex; gap: 16px; align-items: flex-start; }
+.two > * { flex: 1; }
+.qa { break-inside: avoid; margin: 8px 0; }
+.qa .q { font-weight: 700; color: #12355b; }
+.gloss { font-size: 9.4pt; }
+.gloss b { color: #12355b; }
+</style></head><body>
+
+<section class="cover">
+  <div class="kicker">CPS 379 · Reinforcement Learning · Fall 2026 · Final project</div>
+  <h1>Full Understanding of the Code</h1>
+  <div class="sub">Budgeted Stochastic Scene Repair: fixing a tiny grid scene when edits can fail</div>
+  <div class="meta">Binayak Jha · solo project · code in <code>scene-repair/</code></div>
+  <div class="box idea" style="margin-top:22px">
+    <div class="title">What this guide is for</div>
+    Read it once top to bottom and you can explain every file, every rule and every number in
+    class. Each part starts with the idea in plain words, then shows the real code (copied
+    automatically from the source files), then says what each important line does.
+    Every number in this guide is read from the saved results files; none is typed by hand.
+  </div>
+  <div class="toc">
+    <div>1. The problem in one paragraph</div><div>2. How the pieces fit</div>
+    <div>3. A walk through every file</div><div>4. The MDP mapped to code</div>
+    <div>5. How each policy works</div><div>6. How PPO works here, step by step</div>
+    <div>7. How to run it</div><div>8. The real results</div>
+    <div>9. Explain it in 30 seconds + professor questions</div><div>10. Limitations and deviations</div>
+  </div>
+</section>
+
+<h2 class="page-break"><span class="num">1</span>The problem in one paragraph</h2>
+<div class="two">
+<div>
+<p>We have a <b>5×5 grid</b> with <b>3 to 5 labeled objects</b> (box, cat, book, lamp, cup), one per cell.
+We are given <b>2 to 4 goals</b> such as "box is in the center", "cat is next to box", or
+"book is directly south of box". The agent fixes the scene by moving objects one cell at a
+time (north, south, east, west). It can also <b>UNDO</b> its last move or <b>STOP</b>.
+The catch: <b>moves are unreliable</b>. A legal move works 70% of the time, lands in a random
+nearby cell 20% of the time ("jitter"), and does nothing 10% of the time ("fail"). The agent has a
+<b>budget of 8 actions</b>. At the end it gets one score:
+<b>R = s × (0.75 + 0.25 × budget left / 8)</b>, where <b>s</b> is the share of goals met.
+So: meet every goal, and do it with as few actions as possible.</p>
+<div class="box idea"><div class="title">Why this is an RL problem</div>
+Because edits can fail, you cannot just plan once and execute. After every action you must
+look at what really happened and decide again: retry, repair, undo, or stop. That is a
+sequential decision under uncertainty with a limited budget, which is exactly what RL is for.</div>
+</div>
+<figure style="flex:0 0 36%"><img src="../figures/problem.png"><figcaption>The proposal's example scene. Shaded cells are the center 3×3. ✗ means the goal is not met yet.</figcaption></figure>
+</div>
+
+<h3>The worked example from the proposal (it is also a unit test)</h3>
+<figure><img src="../figures/worked_example.png" style="max-width:80%">
+<figcaption>Box (0,1), cat (3,1), book (1,3). The first move fails, then three moves succeed, then STOP.
+Four actions were paid for, so R = 1 × (0.75 + 0.25 × 4/8) = 0.875. The test
+<code>test_worked_example_from_the_proposal_gives_0_875</code> forces exactly these outcomes and checks every number.</figcaption></figure>
+<p><b>Coordinates:</b> (x, y), x grows to the east (right), <b>y grows to the south (down)</b>, like rows on a page.
+So "north" means y − 1.</p>
+
+<h2 class="page-break"><span class="num">2</span>How the pieces fit</h2>
+<p>The project is a small Python package, <code>scene_repair/</code>, plus a few scripts that use it.
+Think of it as five layers. Each layer only uses the layers above it, so you can read the code top to bottom.</p>
+<svg viewBox="0 0 760 360" width="100%" style="font-family:'IBM Plex Sans';font-size:12px">
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#9aa5b1"/></marker></defs>
+<text x="0" y="36" font-weight="700" fill="#2f6fb3">1 · Basics</text>
+<rect x="150.0" y="8" width="293.0" height="46" rx="8" fill="#eaf2fb" stroke="#2f6fb3"/><text x="296.5" y="28" text-anchor="middle" font-weight="600" fill="#1f2933">grid.py</text><text x="296.5" y="44" text-anchor="middle" font-size="10.5" fill="#52606d">board, directions, steps</text>
+<rect x="457.0" y="8" width="293.0" height="46" rx="8" fill="#eaf2fb" stroke="#2f6fb3"/><text x="603.5" y="28" text-anchor="middle" font-weight="600" fill="#1f2933">constraints.py</text><text x="603.5" y="44" text-anchor="middle" font-size="10.5" fill="#52606d">the 3 goal types, the checker</text>
+<line x1="450" y1="56" x2="450" y2="78" stroke="#9aa5b1" stroke-width="1.6" marker-end="url(#a)"/>
+<text x="0" y="108" font-weight="700" fill="#2f6fb3">2 · The game</text>
+<rect x="150.0" y="80" width="190.66666666666666" height="46" rx="8" fill="#eaf2fb" stroke="#2f6fb3"/><text x="245.33333333333331" y="100" text-anchor="middle" font-weight="600" fill="#1f2933">scenes.py</text><text x="245.33333333333331" y="116" text-anchor="middle" font-size="10.5" fill="#52606d">make puzzles, freeze splits</text>
+<rect x="354.66666666666663" y="80" width="190.66666666666666" height="46" rx="8" fill="#12355b" stroke="#12355b"/><text x="449.99999999999994" y="100" text-anchor="middle" font-weight="600" fill="#fff">env.py</text><text x="449.99999999999994" y="116" text-anchor="middle" font-size="10.5" fill="#cfe0f3">the rules: step, reward</text>
+<rect x="559.3333333333333" y="80" width="190.66666666666666" height="46" rx="8" fill="#eaf2fb" stroke="#2f6fb3"/><text x="654.6666666666666" y="100" text-anchor="middle" font-weight="600" fill="#1f2933">encoding.py</text><text x="654.6666666666666" y="116" text-anchor="middle" font-size="10.5" fill="#52606d">state → 243 numbers</text>
+<line x1="450" y1="128" x2="450" y2="150" stroke="#9aa5b1" stroke-width="1.6" marker-end="url(#a)"/>
+<text x="0" y="180" font-weight="700" fill="#2f6fb3">3 · The players</text>
+<rect x="150.0" y="152" width="190.66666666666666" height="46" rx="8" fill="#eaf6ef" stroke="#3f8f6b"/><text x="245.33333333333331" y="172" text-anchor="middle" font-weight="600" fill="#1f2933">policies/</text><text x="245.33333333333331" y="188" text-anchor="middle" font-size="10.5" fill="#52606d">random · planner · bc · ppo</text>
+<rect x="354.66666666666663" y="152" width="190.66666666666666" height="46" rx="8" fill="#eaf6ef" stroke="#3f8f6b"/><text x="449.99999999999994" y="172" text-anchor="middle" font-weight="600" fill="#1f2933">networks.py</text><text x="449.99999999999994" y="188" text-anchor="middle" font-size="10.5" fill="#52606d">small neural net (BC, PPO)</text>
+<rect x="559.3333333333333" y="152" width="190.66666666666666" height="46" rx="8" fill="#eaf6ef" stroke="#3f8f6b"/><text x="654.6666666666666" y="172" text-anchor="middle" font-weight="600" fill="#1f2933">evaluation.py</text><text x="654.6666666666666" y="188" text-anchor="middle" font-size="10.5" fill="#52606d">play episodes, CIs</text>
+<line x1="450" y1="200" x2="450" y2="222" stroke="#9aa5b1" stroke-width="1.6" marker-end="url(#a)"/>
+<text x="0" y="252" font-weight="700" fill="#2f6fb3">4 · The experiments</text>
+<rect x="150.0" y="224" width="600.0" height="46" rx="8" fill="#fdf1e5" stroke="#d9822b"/><text x="450.0" y="244" text-anchor="middle" font-weight="600" fill="#1f2933">scripts/</text><text x="450.0" y="260" text-anchor="middle" font-size="10.5" fill="#52606d">splits · train · evaluate · figures</text>
+<line x1="450" y1="272" x2="450" y2="294" stroke="#9aa5b1" stroke-width="1.6" marker-end="url(#a)"/>
+<text x="0" y="324" font-weight="700" fill="#2f6fb3">5 · One command</text>
+<rect x="150.0" y="296" width="600.0" height="46" rx="8" fill="#12355b" stroke="#12355b"/><text x="450.0" y="316" text-anchor="middle" font-weight="600" fill="#fff">run_all.py</text><text x="450.0" y="332" text-anchor="middle" font-size="10.5" fill="#cfe0f3">runs every script in order</text>
+</svg>
+
+<h3>One episode, as a loop</h3>
+<pre class="plain">obs, info = env.reset(seed=..., options={"scene": scene})   # new puzzle, budget 8, empty undo buffer
+done = False
+while not done:
+    action = policy.act(obs, info)          # every policy has this same one method
+    obs, reward, done, truncated, info = env.step(action)
+# reward is 0 on every step except the last one, where it is s × (0.75 + 0.25 × b/8)</pre>
+<div class="box idea"><div class="title">The one design rule that keeps everything simple</div>
+Every policy answers the same question, <code>act(obs, info) → action number</code>.
+<code>obs</code> is the state as 243 numbers (for neural nets). <code>info["state"]</code> is the same state in
+readable form (for the planner). <code>info["action_mask"]</code> says which of the 22 actions exist.
+So the environment, the evaluator and the scripts never care which policy is playing.</div>
+
+<h2 class="page-break"><span class="num">3</span>A walk through every file</h2>
+<p>Every file starts with a docstring that says its one job. Here they are, with their sizes:</p>
+{{FILE_TABLE}}
+
+<h3>3.1 <code>grid.py</code>: the board</h3>
+<p>Positions are tuples <code>(x, y)</code>. A <b>layout</b> is a tuple of positions, one per object, so
+<code>layout[0]</code> is where the box is. Tuples cannot be changed, which means we can put layouts in sets
+(the planner needs that) and we never change a layout by accident.</p>
+{{CODE:scene_repair.grid:step}}
+{{CODE:scene_repair.grid:moore_neighbors}}
+<ul class="notes"><li><code>DIRECTIONS["S"] = (0, 1)</code>: south adds 1 to y. This is the single place that fixes the "y grows south" rule.</li>
+<li>"Moore neighbors" just means the 8 touching cells, diagonals included. Jitter uses them.</li></ul>
+
+<h3>3.2 <code>constraints.py</code>: the three goal types</h3>
+{{CODE:scene_repair.constraints:is_satisfied}}
+<ul class="notes"><li><b>Center</b>: both x and y are 1, 2 or 3.</li>
+<li><b>Adjacent</b>: Manhattan distance (|dx| + |dy|) is exactly 1, so diagonal does not count.</li>
+<li><b>Direction</b>: object i must sit on the exact cell you get by stepping from j in direction d.
+<code>Direction(book, box, "S")</code> means book = box + (0, 1).</li>
+<li><code>satisfaction_mask</code> runs this for every goal (that is <b>m</b>), and <code>fraction_satisfied</code> is <b>s</b>.</li></ul>
+<p><code>moves_needed_at_least</code> gives, for one goal, the fewest moves that could possibly fix it.
+Each move shifts one object by one cell, so it can close a gap by at most 1. The planner uses this as its
+"estimate" (it never over-estimates, which is what A* needs).</p>
+
+<h3>3.3 <code>scenes.py</code>: making puzzles and keeping splits apart</h3>
+{{CODE:scene_repair.scenes:generate_scene}}
+<ul class="notes"><li><b>Witness first.</b> Drop K objects on random cells, then pick goals that are <i>true</i> there. So every puzzle has a known solution.</li>
+<li><b>Scramble.</b> Make 1 to 6 random legal moves with no noise. Playing them backwards solves the puzzle, so a noise-free fix always fits in the budget.</li>
+<li><b>Reject solved scenes</b>, as the proposal says (<code>continue</code> means "try again").</li>
+<li><code>_pick_constraints</code> always includes at least one goal between two objects and never puts two goals on the same pair (so "cat south of box" and "cat next to box" never both appear; one would be redundant).</li></ul>
+{{CODE:scene_repair.scenes:split_of_template}}
+<ul class="notes"><li>A <b>template</b> is the exact goal list, e.g. <code>center(0)|adjacent(0,1)|direction(2,0,S)</code>.</li>
+<li>We hash it into 10 buckets: 0–6 train, 7 validation, 8–9 test. So the <b>same goal list never appears in two splits</b>.
+On top of that, each split draws from its own seed range (train 0+, val 1,000,000,000+, test 2,000,000,000+).</li>
+<li>Validation ({{VAL_SCENES}} scenes, {{VAL_TEMPLATES}} templates) and test ({{TEST_SCENES}} scenes, {{TEST_TEMPLATES}} templates) are frozen as JSON in <code>results/data/</code>. Training scenes are drawn fresh forever.</li></ul>
+
+<h3>3.4 <code>env.py</code>: the rules of the game (the most important file)</h3>
+<p>It is a normal Gymnasium environment: <code>reset()</code> starts an episode, <code>step(action)</code> returns
+the five values <code>obs, reward, terminated, truncated, info</code>.</p>
+{{CODE:scene_repair.env:SceneRepairEnv.step}}
+<ul class="notes"><li><b>STOP</b> is free: it does not touch the budget. It ends the episode.</li>
+<li><b>MOVE and UNDO always cost 1</b>, and the charge happens <i>before</i> we look at the outcome. So a failed or illegal move still costs.</li>
+<li>If the budget reaches 0, the episode is forced to end.</li>
+<li><b>Reward only at the end</b>: <code>reward</code> stays 0.0 unless <code>self.done</code>. That is the proposal's "no intermediate reward".</li>
+<li><code>truncated</code> is always False: the budget rule is part of the task, so running out is a real ending (terminated), not a time-limit cut.</li></ul>
+{{CODE:scene_repair.env:SceneRepairEnv._do_move}}
+<ul class="notes"><li>First, <b>every MOVE saves the layout from before it</b> in the undo buffer <code>h</code> (length one: the new save replaces the old).</li>
+<li><code>divmod(action, 4)</code> turns an action number into (object k, direction d). Example: action 9 = 4×2 + 1 = MOVE(book, S).</li>
+<li><b>Illegal</b> = target off the board or already occupied. Nothing moves; outcome "invalid".</li>
+<li>One random number decides the outcome: below 0.7 → success, 0.7 to 0.9 → jitter, above 0.9 → fail.</li></ul>
+{{CODE:scene_repair.env:jitter_cells}}
+<ul class="notes"><li>Jitter lands on an <b>empty</b>, on-board, 8-way neighbor of the <i>intended</i> cell v, judged on the grid before the move. The starting cell u is excluded.</li>
+<li>If that list is empty, nothing moves (tested by <code>test_jitter_with_no_candidates_leaves_layout_unchanged</code>).</li></ul>
+{{CODE:scene_repair.env:SceneRepairEnv._do_undo}}
+<ul class="notes"><li>UNDO restores the saved layout <b>with no noise</b> and empties the buffer. With an empty buffer it does nothing (still charged). There is never a refund.</li></ul>
+<div class="box warn"><div class="title">Design choice: padding to 22 actions</div>
+Scenes have 3 to 5 objects, but a neural net needs a fixed number of outputs. So there are always
+4 × 5 + 2 = <b>22 actions</b>: 0–19 are MOVE(k, d) = 4k + d, 20 is UNDO, 21 is STOP. Actions for objects that do not
+exist are switched off in <code>info["action_mask"]</code>; if one is picked anyway it counts as an invalid, charged move.
+Off-board and occupied-target moves are <b>not</b> masked: they are real (bad) choices in the MDP, and the agent must learn to avoid them.</div>
+
+<h3>3.5 <code>encoding.py</code>: turning the state into numbers</h3>
+<p>A neural net needs a fixed-length list of numbers. The state (C, L, b, m, h, o) becomes <b>243 numbers</b>:</p>
+<table class="small"><tr><th>Block</th><th>What it holds</th><th>Size</th></tr>
+<tr><td>Objects</td><td>for each of 5 slots: present?, x as one-hot, y as one-hot, which of N/S/E/W is legal now, "pull" (dx, dy)</td><td>5 × 17 = 85</td></tr>
+<tr><td>Goals C, mask m</td><td>for each of 4 slots: present?, kind, object i, object j, direction, met?, gap (dx, dy)</td><td>4 × 21 = 84</td></tr>
+<tr><td>Budget b</td><td>one-hot of 0..8, and b / 8</td><td>10</td></tr>
+<tr><td>Undo buffer h</td><td>has a saved layout?, then the saved layout (5 × 11)</td><td>56</td></tr>
+<tr><td>Last outcome o</td><td>one-hot over start / success / jitter / fail / invalid / undo / undo_empty / stop</td><td>8</td></tr></table>
+<p class="gloss"><b>One-hot</b> = a row of zeros with a single 1 marking the value. x = 3 becomes 0 0 0 1 0.</p>
+{{CODE:scene_repair.encoding:object_pulls}}
+<ul class="notes"><li><b>Gap</b> (per goal): how far object i still has to travel, in x and in y, to meet the goal.</li>
+<li><b>Pull</b> (per object): the gaps of all its unmet goals added up, so it says "which way this object wants to go".
+If the object is the second one (j) in a goal, the gap counts negative, since moving j the other way closes the same gap.</li>
+<li>These are <b>hints computed only from C and L</b>. They add no information the agent did not already have; they only
+save the small net from learning arithmetic. Section 6.4 shows why we added them: without the pull hint PPO learned very slowly.</li></ul>
+
+<h3>3.6 <code>networks.py</code>: the small neural net</h3>
+{{CODE:scene_repair.networks:PolicyValueNet}}
+<ul class="notes"><li>The <b>body</b> is 2 layers of 128 units with tanh. Both heads read from it.</li>
+<li>The <b>policy head</b> gives 22 scores ("logits"); softmax turns them into probabilities.</li>
+<li><code>masked_fill(~action_mask, -1e9)</code>: switched-off actions get a score of −1,000,000,000, so their probability is 0.</li>
+<li>The <b>value head</b> guesses the final reward from this state. Only PPO uses it. BC uses the same class and ignores it.</li>
+<li><code>NetPolicy</code> wraps a trained net so it has the usual <code>act(obs, info)</code>. In evaluation it is <b>greedy</b>: it takes the most likely action.</li></ul>
+
+<h3>3.7 <code>evaluation.py</code>: playing and scoring</h3>
+{{CODE:scene_repair.evaluation:bootstrap_ci}}
+<ul class="notes"><li>A <b>95% CI</b> (confidence interval) is a range that likely holds the true average.</li>
+<li><b>Bootstrap</b>: resample the test scenes with replacement 2,000 times, compute the average each time, and keep the middle 95%.</li>
+<li>We resample <b>whole scenes</b>, not single episodes, because the {{ROLLOUTS}} rollouts of one scene are related. For BC and PPO,
+each (seed, scene) pair is one unit, so seed-to-seed variation is inside the interval too.</li></ul>
+
+<h3>3.8 The scripts and the tests</h3>
+<ul class="notes">
+<li><code>scripts/make_splits.py</code> freezes validation, test and a "train-check" set (training scenes used only to measure overfitting).</li>
+<li><code>scripts/train_bc.py</code>, <code>scripts/train_ppo.py</code> train one seed each and keep the network that does best on <b>validation</b>.</li>
+<li><code>scripts/evaluate.py</code> plays every policy on the same test scenes with the same rollout seeds and writes <code>results/test_results.json</code> and <code>results/results_table.md</code>.</li>
+<li><code>scripts/make_figures.py</code> and <code>scripts/make_episode_gif.py</code> draw everything in <code>figures/</code> with matplotlib.</li>
+<li><code>tests/</code>: <b>{{TESTS}}</b>. They cover predicates and coordinates, collisions, failure, jitter candidates and the empty fallback,
+undo (restore, clear, length one, empty), budget charging, STOP, forced termination, terminal reward, padding and masking,
+the no-UNDO switch, the noise rates, the reset generator, split separation, the planner, and the PPO advantage math.
+<code>tests/helpers.py</code> has a <code>FakeRandom</code> that lets a test force "success", "jitter" or "fail".</li></ul>
+
+<h2 class="page-break"><span class="num">4</span>The MDP mapped to code</h2>
+<p>An <b>MDP</b> (Markov decision process) is the formal name for "states, actions, how actions change the state, and rewards".
+Here is each piece and the exact line of code that implements it.</p>
+<table>
+<tr><th>MDP piece</th><th>In the proposal</th><th>In the code</th></tr>
+<tr><td>State</td><td>(C, L, b, m, h, o), all observed</td><td><code>env.state()</code> returns all six; <code>encoding.encode</code> turns them into 243 numbers</td></tr>
+<tr><td>Goals C</td><td>Center3x3, ManhattanAdj, CardinalAdj</td><td><code>Constraint</code> + <code>is_satisfied</code> in <code>constraints.py</code></td></tr>
+<tr><td>Layout L</td><td>one cell per object, (x, y), y south</td><td><code>self.layout</code>, a tuple of (x, y); <code>grid.DIRECTIONS</code></td></tr>
+<tr><td>Budget b</td><td>B₀ = 8; MOVE/UNDO cost 1; STOP free</td><td><code>self.budget -= 1</code> in <code>step</code>, skipped for STOP</td></tr>
+<tr><td>Mask m</td><td>recomputed from C and L</td><td><code>satisfaction_mask(constraints, layout)</code></td></tr>
+<tr><td>Undo buffer h</td><td>length one, starts empty</td><td><code>self.undo_buffer</code>; set in <code>_do_move</code>, used and cleared in <code>_do_undo</code></td></tr>
+<tr><td>Outcome o</td><td>success / jitter / failure / invalid / undo</td><td><code>self.outcome</code>, one of 8 names in <code>env.OUTCOMES</code></td></tr>
+<tr><td>Actions</td><td>MOVE(k, d), UNDO, STOP: 4K + 2</td><td>22 numbers: 4k + d, 20 = UNDO, 21 = STOP, plus <code>action_mask</code></td></tr>
+<tr><td>Transition</td><td>0.7 / 0.2 / 0.1; illegal = no change</td><td><code>_do_move</code> and <code>jitter_cells</code></td></tr>
+<tr><td>Reward</td><td>R = s(0.75 + 0.25 b/8) at the end only</td><td><code>terminal_reward</code>, called only when <code>self.done</code></td></tr>
+<tr><td>End of episode</td><td>STOP, or b = 0</td><td><code>self.done = True</code> in both places; <code>terminated</code></td></tr>
+<tr><td>Initial states</td><td>scrambled witness, ≤ 6 moves, not solved</td><td><code>scenes.generate_scene</code></td></tr>
+</table>
+<div class="box idea"><div class="title">Why the state is "Markov" (no hidden memory needed)</div>
+Everything that affects the future is in (C, L, b, m, h, o). The undo buffer is part of the state, so the agent never needs to remember
+its history. That is why a simple feed-forward net (no memory) is enough for both BC and PPO.</div>
+<p><b>Episode length</b> is at most 9 steps (8 paid actions, then the forced end; or STOP earlier). The test scenes need on average
+<b>{{MEAN_FIX}}</b> noise-free moves to fix (shortest fix lengths: {{FIX_DIST}}). Scenes: {{OBJ_DIST}}; {{GOAL_DIST}}.</p>
+
+<h2 class="page-break"><span class="num">5</span>How each policy works, in plain words</h2>
+<h3>Random</h3>
+<p>Picks any allowed action uniformly. It is the floor: anything useful must beat it.</p>
+{{CODE:scene_repair.policies.random_policy:RandomPolicy.act}}
+
+<h3>Adaptive replanner (strong non-learning baseline)</h3>
+<p><b>In one line:</b> pretend moves never fail, find the shortest fix, do its <i>first</i> step, look at what really happened, and plan again.</p>
+<ul class="notes"><li><b>A* search</b> explores layouts in order of "moves so far + an estimate of moves left". The estimate is the largest
+<code>moves_needed_at_least</code> over the goals; it never over-estimates, so the first full fix A* finds is a shortest one.</li>
+<li>It may also use <b>UNDO</b> as a first step, since UNDO is the one noise-free action.</li>
+<li>It never searches deeper than the budget left, and stops after {{EXP_LIMIT}} expanded layouts. If no full fix fits, it heads for the best
+partial layout it saw. When the scene is solved it says STOP.</li>
+<li>It uses the same visible goals and the same exact checker as everyone else, but it reads the readable state instead of the 243 numbers.</li></ul>
+{{CODE:scene_repair.policies.planner:plan}}
+<ul class="notes"><li><code>heap</code> is a priority queue: <code>heappop</code> always gives the layout with the smallest f = g + estimate.</li>
+<li><code>came_from</code> remembers how we reached each layout, so at the end we walk backwards to read off the action list.</li>
+<li><code>if g == budget: continue</code> stops the search from planning more moves than we can pay for.</li></ul>
+
+<h3>Behavior cloning (BC)</h3>
+<p><b>Copy the planner.</b> We let the planner play {{BC_DEMO_EPISODES}} training episodes <i>with noise</i> per seed and save every
+(state, planner's action) pair: {{BC_DEMO_PAIRS}} pairs for seeds 0, 1, 2. Because moves fail and jitter, these demos include
+messy recovery states, not just perfect paths. Then we train the network as a classifier ("given this state, which action did the planner pick?")
+with cross-entropy loss. It is <b>reactive</b>: it only looks at the current state and does no search.</p>
+{{CODE:scene_repair.policies.bc:train_bc_epoch}}
+
+<h3>PPO</h3>
+<p>Learns from its <b>own</b> experience and the final reward only. No demos, no search. Next section explains it step by step.</p>
+
+<h2 class="page-break"><span class="num">6</span>How PPO works here, step by step</h2>
+<div class="box idea"><div class="title">The idea in four sentences</div>
+Play a batch of episodes with the current policy. For each action, ask "did things turn out better or worse than my value head expected?"
+That difference is the <b>advantage</b>. Make good-advantage actions more likely and bad ones less likely, but only by a little each time (that is the
+"proximal" part). Repeat.</div>
+<h3>6.1 Play</h3>
+<p>32 environments run side by side for 64 steps each, so one batch is 2,048 steps. Actions are <b>sampled</b> from the policy's probabilities
+(so it explores). For each step we save the observation, mask, action, the action's log-probability, the value guess, the reward and whether the episode ended.
+A finished environment restarts at once on a new random training scene.</p>
+<h3>6.2 Score: advantages with GAE</h3>
+{{CODE:scene_repair.policies.ppo:compute_advantages}}
+<ul class="notes"><li><code>delta</code> = reward + value of next state − value of this state: a one-step "surprise".</li>
+<li>GAE adds up these surprises going backwards, shrinking older ones by λ = 0.95. With γ = 1 and λ = 1 this would be exactly
+"final reward − value guess" (a unit test checks that).</li>
+<li><code>not_done</code> stops the sum at the end of an episode, so one puzzle's result never leaks into the next.</li>
+<li>γ (gamma, the discount) = 1 because episodes are at most 9 steps and only the final reward matters; the budget term already rewards being quick.</li></ul>
+<h3>6.3 Learn: the clipped objective</h3>
+{{CODE:scene_repair.policies.ppo:ppo_update}}
+<ul class="notes"><li><code>ratio</code> = new probability of the action ÷ old probability. 1 means "unchanged".</li>
+<li><b>Clipping</b>: <code>clamp(ratio, 0.8, 1.2)</code> and the <code>min</code> mean the update gets no extra credit for moving the probability more than 20%. That keeps each update small and stable.</li>
+<li><b>Value loss</b> trains the value head to predict the real return.</li>
+<li><b>Entropy bonus</b> (coefficient 0.03) rewards keeping some randomness, so the policy keeps exploring and does not lock in early.</li>
+<li>Advantages are normalised (mean 0, std 1) for steadier step sizes. Gradients are clipped at norm 0.5. Learning rate starts at 0.001 and shrinks linearly to 0.</li>
+<li>Each batch is used for 4 passes ("epochs") in mini-batches of 512.</li></ul>
+<h3>6.4 How PPO was tuned (validation only)</h3>
+<p>All tuning used seed 0 and the frozen <b>validation</b> set; the test set was never looked at. Full notes and logs are in <code>results/tuning/</code>.</p>
+<ul class="notes"><li><b>Round 1</b> (no pull hint): every setting was slow, the best reached 0.385 validation success after about 0.7M steps.
+We saw that the net had to learn "goal is east of object k → pick MOVE(k, E)" from raw one-hot positions.</li>
+<li><b>Fix</b>: add the per-object pull hint (computed from C and L only).</li>
+<li><b>Rounds 2–3</b> (with the hint): settings reached 0.865–0.915 best validation success. All were within the noise of a 200-scene check, so
+we picked the steadiest: learning rate 0.001 annealed to 0, entropy 0.03, hidden size 128.</li>
+<li><b>Final runs</b>: {{PPO_STEPS}} environment steps per seed, 3 seeds ({{PPO_STEPS_TOTAL}} steps total), about {{PPO_MINUTES}} minutes per seed on one CPU core.
+We checked validation every 25 updates and kept the best network.</li></ul>
+<div class="box warn"><div class="title">Why not just train on the test set?</div>
+Picking settings or checkpoints by test score would make the test score optimistic. So: tune on validation, choose checkpoints on validation, and look at test once at the end.</div>
+
+<h2 class="page-break"><span class="num">7</span>How to run it</h2>
+<pre class="plain">cd scene-repair
+python -m venv .venv &amp;&amp; source .venv/bin/activate
+pip install -r requirements.txt
+
+python -m pytest -q tests      # the unit tests (a few seconds)
+python run_all.py --quick      # tiny end-to-end check, about 1 minute, writes results/quick/
+python run_all.py              # the full study, about {{TOTAL_MIN}} minutes on 8 CPU cores
+python docs/build_guide.py     # rebuild this guide from the saved results</pre>
+<p>Single pieces: <code>python scripts/train_ppo.py --seed 1</code>, <code>python scripts/train_bc.py --seed 0 --variant no_undo</code>,
+<code>python scripts/evaluate.py --variants main</code>. All knobs live in <code>scene_repair/settings.py</code>.</p>
+<p><b>Hardware used for the numbers below:</b> {{CPU}}, {{CORES}} cores, no GPU, Python {{PYVER}}, PyTorch {{TORCH}}.
+The full run took {{TOTAL_MIN}} minutes in total, of which {{TRAIN_MIN}} minutes were training (up to 7 jobs at once).</p>
+
+<h2 class="page-break"><span class="num">8</span>The real results</h2>
+<p>Test set: <b>{{TEST_SCENES}} scenes × {{ROLLOUTS}} rollouts = {{TEST_EPISODES}} episodes</b> per policy (per seed for BC and PPO), same scenes and rollout seeds for every policy.
+Brackets are 95% bootstrap CIs. "Actions used" counts paid actions (STOP is free).</p>
+{{RESULTS_TABLE}}
+<figure><img src="../figures/success_bar.png" style="max-width:62%"><figcaption>Test full-success rate. Error bars are 95% CIs; black dots are the 3 training seeds.</figcaption></figure>
+<div class="box idea"><div class="title">What this means</div>
+<ul class="notes">
+<li><b>The replanner wins</b> ({{PLANNER_SUCC}} full success). The proposal said a planner win would be a valid result, and it is the honest result here.
+It has an exact model of the rules (minus the noise) and searches, and these puzzles are short (a {{MEAN_FIX}}-move fix on average), so search is cheap and strong.</li>
+<li><b>PPO is second</b> ({{PPO_SUCC}}), clearly ahead of behavior cloning ({{BC_SUCC}}); their CIs do not overlap. PPO learned only from the final reward, no demos, no search.</li>
+<li><b>BC is below its own teacher.</b> It copies the planner's actions but cannot search, so small copying mistakes add up, and once it makes one it reaches states the planner rarely visited.</li>
+<li><b>Random</b> almost never solves a scene ({{RANDOM_SUCC}}), which shows the task is not trivial.</li>
+<li><b>Efficiency:</b> the planner uses {{PLANNER_ACT}} paid actions on average, PPO {{PPO_ACT}}, BC {{BC_ACT}}. Fewer actions means more budget left, which is why mean R follows the same order.</li>
+<li><b>UNDO is almost never used</b> by any trained or planning policy (last column). After a jitter, a normal move usually repairs things just as cheaply as UNDO.</li></ul></div>
+<h3>Each training seed, and train vs validation (overfitting check)</h3>
+{{SEED_TABLE}}
+<p>All three seeds land close together for both learned policies, so the result is not one lucky run.
+<b>Overfitting check:</b> BC does noticeably better on training scenes than on validation for seed 0 (it memorises its demos; its training loss keeps falling in the curve below while validation success stops improving).
+PPO scores about the same on training, validation and test scenes, so it generalises to goal lists it never saw in training.
+(Validation here uses different rollout seeds from the ones used to pick checkpoints, which is why these numbers differ slightly from the training logs.)</p>
+<figure><img src="../figures/learning_curves.png" style="max-width:80%"><figcaption>PPO success while training (light, smoothed) and on validation (dark dots), 3 seeds. Dashed: the replanner on the same validation scenes.</figcaption></figure>
+<figure><img src="../figures/bc_curves.png" style="max-width:80%"><figcaption>BC: training loss keeps falling while validation success flattens out early.</figcaption></figure>
+<h3>Ablations: where does the difficulty come from?</h3>
+<p>Each setting retrains BC and PPO from scratch (3 seeds; PPO for 2,000,000 steps) and re-runs the planner and random on the same test scenes.</p>
+{{ABLATION_TABLE}}
+<figure><img src="../figures/ablations_bar.png"><figcaption>Full success on the test set for each setting.</figcaption></figure>
+<div class="box idea"><div class="title">What the ablations say</div>
+<ul class="notes">
+<li><b>Turning noise off</b> helps everyone: planner {{PLANNER_SUCC}} → {{DETERMINISTIC_PLANNER_SUCC}}, PPO {{PPO_SUCC}} → {{DETERMINISTIC_PPO_SUCC}}, BC {{BC_SUCC}} → {{DETERMINISTIC_BC_SUCC}}.
+So noise costs the planner about 2 points and the learners about 5–6 points. But even with no noise, the learned policies still miss some scenes, so part of their gap is in
+<i>learning</i> the mapping from state to action, not only in handling noise.</li>
+<li><b>Removing UNDO</b> changes nothing for the planner ({{NO_UNDO_PLANNER_SUCC}}) or BC ({{NO_UNDO_BC_SUCC}}). PPO is lower ({{NO_UNDO_PPO_SUCC}}), but main-setting PPO used
+UNDO essentially never, so this drop is <b>not</b> caused by losing UNDO. The likely reason is that ablation PPO runs trained for 2,000,000 steps instead of 3,000,000
+(to save compute) and the run-to-run spread. Honest reading: <b>UNDO does not matter in this task</b> as designed.</li></ul></div>
+<h3>Compute, reported separately (as the proposal promised)</h3>
+<ul class="notes"><li><b>Planner search:</b> {{PLANNER_MS}} ms per decision on average; {{PLANNER_EXP}} layouts expanded over {{PLANNER_DECISIONS}} test decisions (limit {{EXP_LIMIT}} per decision).</li>
+<li><b>BC demonstrations:</b> {{BC_DEMO_EPISODES}} planner episodes per seed ({{BC_DEMO_PAIRS}} state-action pairs); about {{BC_MINUTES}} minutes per seed including demo collection.</li>
+<li><b>PPO:</b> {{PPO_STEPS}} environment steps per seed, no demos, no search; about {{PPO_MINUTES}} minutes per seed.</li></ul>
+<h3>One real test episode played by PPO</h3>
+<figure><img src="../figures/ppo_episode.png"><figcaption>The first test scene where a move went wrong and PPO still finished. Animated version: <code>figures/ppo_episode.gif</code>.</figcaption></figure>
+
+<h2 class="page-break"><span class="num">9</span>Explain it in 30 seconds</h2>
+<div class="box say"><div class="title">Say this</div>
+"I built a small RL benchmark: fix a 5×5 grid scene so it meets goals like 'book directly south of box', with only 8 paid actions,
+where each move works 70% of the time, jitters 20% and fails 10%. The agent sees everything and gets one reward at the end: the share of goals met,
+scaled up for leftover budget. I compared four players on the same {{TEST_SCENES}} held-out scenes: random, an A* replanner that replans after every outcome,
+behavior cloning of that planner, and PPO. The planner wins with {{PLANNER_SUCC}} full success; PPO, learning only from the end reward, gets {{PPO_SUCC}} and beats
+behavior cloning at {{BC_SUCC}}. Turning noise off helps everyone, and turning UNDO off changes almost nothing, so here the hard part is
+noise plus learning the state-to-action mapping, not undoing."</div>
+<h3>Likely professor questions, with answers</h3>
+<div class="qa"><div class="q">Q: Why does the planner beat PPO? Isn't that bad for an RL project?</div><div>A: No. The proposal said a planner win is a valid result. The planner is given a near-perfect model of the rules and the puzzles are short, so search is cheap and very strong. PPO had to discover everything from a single end-of-episode number. Getting to {{PPO_SUCC}} that way, and beating imitation of the planner, is the interesting part.</div></div>
+<div class="qa"><div class="q">Q: Why does PPO beat behavior cloning, when BC copies the better player?</div><div>A: BC only copies; it does no search. Small mistakes put it in states the planner rarely reached, and it has no signal for what to do there. PPO trains on its own mistakes and is graded on the real reward, so it learns to recover.</div></div>
+<div class="qa"><div class="q">Q: Why PPO and not DQN?</div><div>A: The action set is small and discrete, which suits both. PPO handles the action mask cleanly (masked softmax), works well with on-policy terminal rewards, and has fewer moving parts to explain (no replay buffer, no target network). The proposal committed to PPO.</div></div>
+<div class="qa"><div class="q">Q: Is the 'pull' hint cheating?</div><div>A: No. It is computed only from the goals C and the layout L, which the agent already sees, and BC gets the exact same numbers. It is feature engineering, like normalising inputs. Without it PPO reached only 0.385 validation success in tuning; that is documented in results/tuning/.</div></div>
+<div class="qa"><div class="q">Q: How do you know you did not tune on the test set?</div><div>A: Every setting and every checkpoint was chosen with the validation set. The test set was used once, in scripts/evaluate.py, after training finished. Splits are disjoint by seed range and by goal-list template.</div></div>
+<div class="qa"><div class="q">Q: Why is the reward only at the end? Isn't that hard for RL?</div><div>A: That is what the proposal specified: no shaping. Episodes are at most 9 steps, so credit assignment is short. The value head and GAE turn the single end reward into a per-step advantage.</div></div>
+<div class="qa"><div class="q">Q: What do the confidence intervals mean?</div><div>A: 95% bootstrap intervals: resample the test scenes 2,000 times and take the middle 95% of averages. For BC and PPO each (seed, scene) is resampled, so seed variation is included. Per-seed numbers are in the seed table.</div></div>
+<div class="qa"><div class="q">Q: Why is UNDO almost never used?</div><div>A: After a jitter the object is usually one cell from where it should be. A normal move fixes that for the same price as UNDO, and sometimes makes progress at the same time. The no-UNDO ablation confirms the planner and BC do not change.</div></div>
+<div class="qa"><div class="q">Q: What is the hardest part for the learned policies?</div><div>A: Mapping the state to the right object and direction. With noise off they still fail about 5–11% of scenes, while the planner is perfect. In the main setting, of PPO's {{PPO_FAILS}} failed test episodes (over 3 seeds), {{PPO_STOPPED}} were STOP with a goal still unmet and {{PPO_OOB}} ran out of budget; PPO wastes {{PPO_WASTE}} actions per episode on invalid moves or empty UNDOs (BC: {{BC_WASTE}}, planner: {{PLANNER_WASTE}}). Details: <code>results/failure_analysis.json</code>.</div></div>
+<div class="qa"><div class="q">Q: Could PPO match the planner with more training?</div><div>A: Maybe a little: the learning curves had mostly flattened after about 2 million steps. But the planner has a model and searches; a reactive network would likely need more capacity or a better input design to fully close the gap.</div></div>
+
+<h2 class="page-break"><span class="num">10</span>Limitations and deviations from the proposal</h2>
+<h3>Limitations</h3>
+<ul class="notes">
+<li><b>The puzzles are easy.</b> Following the proposal's reset recipe, many scrambles move objects no goal cares about, so the shortest fix is often 1 or 2 moves ({{FIX_DIST}}). Harder resets would separate the policies more.</li>
+<li><b>The noise is made up.</b> 0.7 / 0.2 / 0.1 are modelling assumptions, not measurements of Imagine or any real editor (as the proposal says).</li>
+<li><b>Hints.</b> The observation includes computed hints (legal moves, gaps, pulls). They add no new information but they do make learning easier, and results without them would be much worse.</li>
+<li><b>Ablations used fewer PPO steps</b> (2M instead of 3M), so small PPO differences between settings should not be over-read.</li>
+<li><b>The planner is near-perfect</b> because it has the exact rules. In a real editor the model would be imperfect and the comparison could change.</li>
+<li><b>Only three seeds</b> per learned policy, on one CPU machine. No HPC was used; GRPO (optional in the proposal) was not attempted.</li>
+<li>The frozen parser from language to goals is outside this project: goals are given directly, as the proposal scoped it.</li></ul>
+<h3>Deviations from the proposal, and why</h3>
+<ul class="notes">
+<li><b>Code layout:</b> the proposal sketched <code>rl_env.scene_env.SceneEnv</code>; the code is <code>scene_repair.env.SceneRepairEnv</code> with the same Gymnasium five-value interface. The old public repo (rl-scene-env) still holds the earlier one-step environment and was not changed.</li>
+<li><b>Planner search:</b> A* with an admissible estimate (allowed by "BFS or greedy" in spirit: it finds the same shortest plans as BFS, just faster), with an expansion limit of {{EXP_LIMIT}} per decision. On the test set it hit that limit {{PLANNER_LIMIT_HITS}} times in {{PLANNER_DECISIONS}} decisions (the largest single search expanded far fewer layouts).</li>
+<li><b>Undo buffer rule detail:</b> every MOVE, including failed and invalid ones, saves the pre-move layout (a literal reading of "a MOVE saves its pre-action layout"). So UNDO after a failed move is a charged no-op.</li>
+<li><b>"Template" split:</b> a template is defined as the exact goal list. Hashing it decides the split, so no goal list is shared between train, validation and test.</li>
+<li><b>Padding choice</b> (the proposal asked to document it): 22 actions always; missing-object actions masked, and charged as invalid if chosen anyway.</li>
+<li><b>Number of goals and objects:</b> the proposal does not fix them; we use 3–5 objects and 2–4 goals, at least one of them relational.</li>
+<li><b>Added observation hints</b> (pull, gap, legal-move flags), for the reason given in section 6.4.</li></ul>
+
+<h3>Tiny glossary</h3>
+<p class="gloss"><b>Policy</b>: the rule that picks an action from a state. <b>Episode</b>: one puzzle from start to STOP or empty budget.
+<b>Advantage</b>: how much better an action turned out than expected. <b>Value head</b>: the part of the net that guesses the final reward.
+<b>Entropy</b>: how spread-out the action probabilities are (high = more random). <b>One-hot</b>: zeros with a single 1 marking a value.
+<b>A*</b>: a search that explores the most promising options first using a safe estimate of the remaining cost. <b>Bootstrap CI</b>: a confidence range found by resampling the data many times.
+<b>Ablation</b>: turning one feature off to see how much it matters. <b>Seed</b>: the number that fixes the randomness so a run can be repeated.</p>
+</body></html>

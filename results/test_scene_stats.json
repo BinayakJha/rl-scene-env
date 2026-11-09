@@ -1,0 +1,27 @@
+{
+ "scenes": 500,
+ "objects": {
+  "3": 78,
+  "4": 139,
+  "5": 283
+ },
+ "goals": {
+  "2": 223,
+  "3": 174,
+  "4": 103
+ },
+ "goal_kinds": {
+  "center": 570,
+  "direction": 557,
+  "adjacent": 253
+ },
+ "shortest_noise_free_fix": {
+  "1": 231,
+  "2": 157,
+  "3": 78,
+  "4": 26,
+  "5": 7,
+  "6": 1
+ },
+ "mean_shortest_fix": 1.848
+}

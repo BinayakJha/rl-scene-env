@@ -1,0 +1,1007 @@
+
+$ /workspace/venv-sr/bin/python -m pytest -q tests
+.............................                                            [100%]
+29 passed in 2.16s
+
+$ /workspace/venv-sr/bin/python scripts/make_splits.py
+froze splits: {'val': {'scenes': 300, 'templates': 243}, 'test': {'scenes': 500, 'templates': 420}, 'train_check': {'scenes': 300, 'templates': 284}}
+$ /workspace/venv-sr/bin/python scripts/train_ppo.py --seed 0 --variant main
+$ /workspace/venv-sr/bin/python scripts/train_bc.py --seed 0 --variant main
+$ /workspace/venv-sr/bin/python scripts/train_ppo.py --seed 1 --variant main
+$ /workspace/venv-sr/bin/python scripts/train_bc.py --seed 1 --variant main
+$ /workspace/venv-sr/bin/python scripts/train_ppo.py --seed 2 --variant main
+$ /workspace/venv-sr/bin/python scripts/train_bc.py --seed 2 --variant main
+$ /workspace/venv-sr/bin/python scripts/train_ppo.py --seed 0 --variant deterministic
+[bc seed 2] epoch 1 loss 2.278 val success 0.173
+[bc seed 0] epoch 1 loss 2.263 val success 0.173
+[bc seed 1] epoch 1 loss 2.313 val success 0.147
+[bc seed 2] epoch 2 loss 1.425 val success 0.517
+[bc seed 0] epoch 2 loss 1.453 val success 0.577
+[bc seed 1] epoch 2 loss 1.463 val success 0.560
+[bc seed 2] epoch 3 loss 0.943 val success 0.687
+[bc seed 0] epoch 3 loss 0.950 val success 0.710
+[bc seed 1] epoch 3 loss 0.969 val success 0.697
+[bc seed 2] epoch 4 loss 0.752 val success 0.737
+[bc seed 0] epoch 4 loss 0.757 val success 0.770
+[bc seed 1] epoch 4 loss 0.772 val success 0.770
+[bc seed 2] epoch 5 loss 0.673 val success 0.740
+[bc seed 1] epoch 5 loss 0.697 val success 0.777
+[bc seed 0] epoch 5 loss 0.678 val success 0.733
+[ppo main seed 1] 51,200 steps  train success 0.109  val success 0.100  entropy 2.12  (12s)
+[bc seed 2] epoch 6 loss 0.623 val success 0.773
+[bc seed 1] epoch 6 loss 0.652 val success 0.760
+[bc seed 0] epoch 6 loss 0.630 val success 0.780
+[ppo deterministic seed 0] 51,200 steps  train success 0.198  val success 0.177  entropy 1.88  (12s)
+[bc seed 2] epoch 7 loss 0.580 val success 0.757
+[bc seed 1] epoch 7 loss 0.613 val success 0.797
+[bc seed 0] epoch 7 loss 0.599 val success 0.783
+[ppo main seed 0] 51,200 steps  train success 0.097  val success 0.120  entropy 2.07  (12s)
+[ppo main seed 2] 51,200 steps  train success 0.082  val success 0.077  entropy 1.99  (13s)
+[bc seed 2] epoch 8 loss 0.554 val success 0.793
+[bc seed 1] epoch 8 loss 0.582 val success 0.763
+[bc seed 0] epoch 8 loss 0.571 val success 0.783
+[bc seed 2] epoch 9 loss 0.532 val success 0.800
+[bc seed 0] epoch 9 loss 0.546 val success 0.773
+[bc seed 1] epoch 9 loss 0.564 val success 0.790
+[bc seed 2] epoch 10 loss 0.511 val success 0.793
+[bc seed 0] epoch 10 loss 0.523 val success 0.787
+[bc seed 1] epoch 10 loss 0.541 val success 0.787
+[bc seed 2] epoch 11 loss 0.490 val success 0.790
+[bc seed 0] epoch 11 loss 0.505 val success 0.790
+[bc seed 1] epoch 11 loss 0.522 val success 0.770
+[bc seed 2] epoch 12 loss 0.475 val success 0.787
+[bc seed 0] epoch 12 loss 0.488 val success 0.797
+[bc seed 1] epoch 12 loss 0.503 val success 0.813
+[bc seed 0] epoch 13 loss 0.470 val success 0.787
+[bc seed 2] epoch 13 loss 0.454 val success 0.800
+[bc seed 1] epoch 13 loss 0.484 val success 0.800
+[bc seed 0] epoch 14 loss 0.453 val success 0.793
+[bc seed 2] epoch 14 loss 0.439 val success 0.797
+[bc seed 1] epoch 14 loss 0.465 val success 0.803
+[bc seed 0] epoch 15 loss 0.435 val success 0.807
+[bc seed 2] epoch 15 loss 0.423 val success 0.793
+[bc seed 1] epoch 15 loss 0.448 val success 0.790
+[bc seed 0] epoch 16 loss 0.421 val success 0.790
+[bc seed 2] epoch 16 loss 0.406 val success 0.800
+[bc seed 1] epoch 16 loss 0.431 val success 0.790
+[bc seed 2] epoch 17 loss 0.391 val success 0.807
+[bc seed 0] epoch 17 loss 0.405 val success 0.827
+[bc seed 1] epoch 17 loss 0.420 val success 0.797
+[bc seed 2] epoch 18 loss 0.377 val success 0.800
+[bc seed 0] epoch 18 loss 0.389 val success 0.790
+[bc seed 1] epoch 18 loss 0.407 val success 0.797
+[bc seed 2] epoch 19 loss 0.363 val success 0.787
+[bc seed 0] epoch 19 loss 0.381 val success 0.813
+[bc seed 2] epoch 20 loss 0.354 val success 0.827
+[bc seed 1] epoch 19 loss 0.393 val success 0.803
+[bc seed 0] epoch 20 loss 0.363 val success 0.803
+[bc seed 2] epoch 21 loss 0.339 val success 0.810
+[bc seed 1] epoch 20 loss 0.378 val success 0.803
+[bc seed 0] epoch 21 loss 0.350 val success 0.820
+[bc seed 0] epoch 22 loss 0.339 val success 0.813
+[bc seed 2] epoch 22 loss 0.330 val success 0.820
+[bc seed 1] epoch 21 loss 0.364 val success 0.800
+[bc seed 1] epoch 22 loss 0.353 val success 0.813
+[bc seed 0] epoch 23 loss 0.325 val success 0.810
+[bc seed 2] epoch 23 loss 0.317 val success 0.797
+[bc seed 1] epoch 23 loss 0.339 val success 0.830
+[bc seed 2] epoch 24 loss 0.303 val success 0.820
+[bc seed 0] epoch 24 loss 0.315 val success 0.817
+[bc seed 2] epoch 25 loss 0.297 val success 0.813
+[bc seed 1] epoch 24 loss 0.327 val success 0.817
+[bc seed 0] epoch 25 loss 0.299 val success 0.827
+[bc seed 1] epoch 25 loss 0.318 val success 0.850
+[bc seed 2] epoch 26 loss 0.281 val success 0.820
+[bc seed 0] epoch 26 loss 0.290 val success 0.817
+[bc seed 1] epoch 26 loss 0.304 val success 0.820
+[bc seed 2] epoch 27 loss 0.270 val success 0.830
+[bc seed 0] epoch 27 loss 0.281 val success 0.823
+[bc seed 1] epoch 27 loss 0.295 val success 0.820
+[bc seed 2] epoch 28 loss 0.261 val success 0.803
+[bc seed 0] epoch 28 loss 0.269 val success 0.830
+[bc seed 1] epoch 28 loss 0.281 val success 0.827
+[bc seed 2] epoch 29 loss 0.249 val success 0.830
+[bc seed 1] epoch 29 loss 0.269 val success 0.823
+[bc seed 0] epoch 29 loss 0.260 val success 0.813
+[bc seed 2] epoch 30 loss 0.240 val success 0.817
+[bc seed 1] epoch 30 loss 0.259 val success 0.820
+[bc seed 0] epoch 30 loss 0.247 val success 0.817
+[bc seed 2] epoch 31 loss 0.231 val success 0.800
+[bc seed 1] epoch 31 loss 0.249 val success 0.840
+[bc seed 0] epoch 31 loss 0.236 val success 0.833
+[bc seed 2] epoch 32 loss 0.220 val success 0.820
+[bc seed 1] epoch 32 loss 0.239 val success 0.837
+[bc seed 0] epoch 32 loss 0.225 val success 0.820
+[bc seed 2] epoch 33 loss 0.208 val success 0.797
+[bc seed 1] epoch 33 loss 0.228 val success 0.827
+[bc seed 0] epoch 33 loss 0.218 val success 0.817
+[bc seed 2] epoch 34 loss 0.199 val success 0.813
+[bc seed 1] epoch 34 loss 0.216 val success 0.837
+[bc seed 0] epoch 34 loss 0.208 val success 0.840
+[bc seed 2] epoch 35 loss 0.188 val success 0.817
+[bc seed 1] epoch 35 loss 0.206 val success 0.850
+[bc seed 0] epoch 35 loss 0.194 val success 0.837
+[bc seed 2] epoch 36 loss 0.182 val success 0.833
+[bc seed 1] epoch 36 loss 0.198 val success 0.817
+[bc seed 0] epoch 36 loss 0.187 val success 0.823
+[bc seed 2] epoch 37 loss 0.172 val success 0.830
+[bc seed 1] epoch 37 loss 0.186 val success 0.840
+[bc seed 0] epoch 37 loss 0.178 val success 0.823
+[bc seed 2] epoch 38 loss 0.165 val success 0.830
+[bc seed 1] epoch 38 loss 0.178 val success 0.850
+[bc seed 2] epoch 39 loss 0.154 val success 0.817
+[bc seed 0] epoch 38 loss 0.169 val success 0.817
+[bc seed 1] epoch 39 loss 0.169 val success 0.833
+[bc seed 2] epoch 40 loss 0.147 val success 0.820
+[bc seed 0] epoch 39 loss 0.158 val success 0.837
+[bc seed 1] epoch 40 loss 0.160 val success 0.813
+[bc seed 2] epoch 41 loss 0.141 val success 0.827
+[bc seed 0] epoch 40 loss 0.151 val success 0.833
+[bc seed 1] epoch 41 loss 0.151 val success 0.843
+[bc seed 2] epoch 42 loss 0.130 val success 0.810
+[bc seed 0] epoch 41 loss 0.141 val success 0.810
+[bc seed 1] epoch 42 loss 0.140 val success 0.830
+[bc seed 2] epoch 43 loss 0.124 val success 0.807
+[bc seed 0] epoch 42 loss 0.137 val success 0.840
+[ppo deterministic seed 0] 102,400 steps  train success 0.614  val success 0.670  entropy 1.30  (25s)
+[bc seed 1] epoch 43 loss 0.132 val success 0.840
+[bc seed 2] epoch 44 loss 0.116 val success 0.817
+[bc seed 0] epoch 43 loss 0.127 val success 0.837
+[bc seed 1] epoch 44 loss 0.128 val success 0.853
+[bc seed 2] epoch 45 loss 0.110 val success 0.830
+[bc seed 0] epoch 44 loss 0.118 val success 0.833
+[bc seed 1] epoch 45 loss 0.120 val success 0.847
+[bc seed 2] epoch 46 loss 0.102 val success 0.833
+[bc seed 0] epoch 45 loss 0.115 val success 0.833
+[ppo main seed 1] 102,400 steps  train success 0.364  val success 0.370  entropy 1.43  (25s)
+[ppo main seed 0] 102,400 steps  train success 0.394  val success 0.367  entropy 1.50  (25s)
+[bc seed 2] epoch 47 loss 0.096 val success 0.820
+[bc seed 1] epoch 46 loss 0.113 val success 0.837
+[bc seed 0] epoch 46 loss 0.106 val success 0.820
+[bc seed 2] epoch 48 loss 0.090 val success 0.810
+[bc seed 0] epoch 47 loss 0.099 val success 0.853
+[bc seed 1] epoch 47 loss 0.105 val success 0.827
+[bc seed 2] epoch 49 loss 0.085 val success 0.830
+[bc seed 0] epoch 48 loss 0.093 val success 0.837
+[bc seed 1] epoch 48 loss 0.098 val success 0.853
+[bc seed 2] epoch 50 loss 0.081 val success 0.817
+[bc seed 0] epoch 49 loss 0.086 val success 0.837
+[bc seed 1] epoch 49 loss 0.094 val success 0.827
+[bc seed 2] epoch 51 loss 0.075 val success 0.823
+[bc seed 0] epoch 50 loss 0.082 val success 0.837
+[bc seed 1] epoch 50 loss 0.087 val success 0.840
+[bc seed 2] epoch 52 loss 0.069 val success 0.827
+[bc seed 0] epoch 51 loss 0.075 val success 0.847
+[bc seed 1] epoch 51 loss 0.081 val success 0.837
+[bc seed 2] epoch 53 loss 0.065 val success 0.823
+[bc seed 0] epoch 52 loss 0.071 val success 0.837
+[bc seed 1] epoch 52 loss 0.076 val success 0.847
+[bc seed 2] epoch 54 loss 0.061 val success 0.823
+[bc seed 0] epoch 53 loss 0.066 val success 0.830
+[bc seed 1] epoch 53 loss 0.070 val success 0.833
+[bc seed 2] epoch 55 loss 0.057 val success 0.813
+[bc seed 0] epoch 54 loss 0.061 val success 0.830
+[bc seed 1] epoch 54 loss 0.065 val success 0.840
+[bc seed 2] epoch 56 loss 0.053 val success 0.820
+[bc seed 0] epoch 55 loss 0.057 val success 0.830
+[bc seed 1] epoch 55 loss 0.061 val success 0.837
+[bc seed 2] epoch 57 loss 0.049 val success 0.817
+[bc seed 0] epoch 56 loss 0.053 val success 0.847
+[ppo main seed 2] 102,400 steps  train success 0.307  val success 0.410  entropy 1.50  (29s)
+[bc seed 1] epoch 56 loss 0.057 val success 0.833
+[bc seed 2] epoch 58 loss 0.046 val success 0.813
+[bc seed 0] epoch 57 loss 0.050 val success 0.837
+[bc seed 1] epoch 57 loss 0.053 val success 0.837
+[bc seed 2] epoch 59 loss 0.042 val success 0.827
+[bc seed 0] epoch 58 loss 0.046 val success 0.823
+[bc seed 1] epoch 58 loss 0.050 val success 0.840
+[bc seed 2] epoch 60 loss 0.039 val success 0.830
+[bc seed 0] epoch 59 loss 0.042 val success 0.837
+[bc seed 1] epoch 59 loss 0.047 val success 0.843
+[bc seed 0] epoch 60 loss 0.039 val success 0.837
+[bc seed 1] epoch 60 loss 0.043 val success 0.833
+$ /workspace/venv-sr/bin/python scripts/train_bc.py --seed 0 --variant deterministic
+$ /workspace/venv-sr/bin/python scripts/train_ppo.py --seed 1 --variant deterministic
+$ /workspace/venv-sr/bin/python scripts/train_bc.py --seed 1 --variant deterministic
+[ppo main seed 0] 153,600 steps  train success 0.558  val success 0.603  entropy 1.15  (37s)
+[ppo main seed 1] 153,600 steps  train success 0.571  val success 0.633  entropy 1.16  (40s)
+[ppo deterministic seed 0] 153,600 steps  train success 0.820  val success 0.870  entropy 1.03  (40s)
+[ppo main seed 2] 153,600 steps  train success 0.489  val success 0.543  entropy 1.21  (41s)
+[bc seed 0] epoch 1 loss 2.210 val success 0.097
+[bc seed 0] epoch 2 loss 1.596 val success 0.400
+[bc seed 0] epoch 3 loss 1.086 val success 0.667
+[bc seed 0] epoch 4 loss 0.792 val success 0.803
+[bc seed 0] epoch 5 loss 0.657 val success 0.823
+[bc seed 0] epoch 6 loss 0.593 val success 0.833
+[bc seed 0] epoch 7 loss 0.559 val success 0.843
+[bc seed 0] epoch 8 loss 0.528 val success 0.840
+[bc seed 0] epoch 9 loss 0.508 val success 0.827
+[bc seed 0] epoch 10 loss 0.488 val success 0.853
+[ppo deterministic seed 1] 51,200 steps  train success 0.231  val success 0.290  entropy 2.01  (11s)
+[bc seed 1] epoch 1 loss 2.228 val success 0.063
+[bc seed 0] epoch 11 loss 0.471 val success 0.830
+[bc seed 1] epoch 2 loss 1.606 val success 0.360
+[bc seed 0] epoch 12 loss 0.456 val success 0.853
+[bc seed 1] epoch 3 loss 1.097 val success 0.653
+[bc seed 1] epoch 4 loss 0.805 val success 0.770
+[bc seed 0] epoch 13 loss 0.443 val success 0.840
+[bc seed 1] epoch 5 loss 0.670 val success 0.817
+[bc seed 0] epoch 14 loss 0.428 val success 0.833
+[bc seed 1] epoch 6 loss 0.609 val success 0.820
+[bc seed 1] epoch 7 loss 0.567 val success 0.833
+[bc seed 0] epoch 15 loss 0.422 val success 0.850
+[bc seed 1] epoch 8 loss 0.541 val success 0.837
+[bc seed 0] epoch 16 loss 0.406 val success 0.863
+[bc seed 1] epoch 9 loss 0.520 val success 0.863
+[bc seed 0] epoch 17 loss 0.397 val success 0.840
+[bc seed 1] epoch 10 loss 0.501 val success 0.847
+[bc seed 0] epoch 18 loss 0.387 val success 0.847
+[bc seed 1] epoch 11 loss 0.480 val success 0.857
+[bc seed 0] epoch 19 loss 0.375 val success 0.830
+[ppo main seed 0] 204,800 steps  train success 0.651  val success 0.713  entropy 0.96  (48s)
+[bc seed 1] epoch 12 loss 0.467 val success 0.857
+[bc seed 0] epoch 20 loss 0.361 val success 0.853
+[bc seed 1] epoch 13 loss 0.453 val success 0.863
+[bc seed 0] epoch 21 loss 0.355 val success 0.860
+[bc seed 1] epoch 14 loss 0.438 val success 0.867
+[bc seed 0] epoch 22 loss 0.342 val success 0.853
+[bc seed 1] epoch 15 loss 0.424 val success 0.867
+[bc seed 0] epoch 23 loss 0.331 val success 0.880
+[bc seed 1] epoch 16 loss 0.410 val success 0.880
+[bc seed 0] epoch 24 loss 0.320 val success 0.880
+[bc seed 1] epoch 17 loss 0.404 val success 0.863
+[bc seed 0] epoch 25 loss 0.310 val success 0.863
+[bc seed 1] epoch 18 loss 0.389 val success 0.887
+[bc seed 0] epoch 26 loss 0.306 val success 0.887
+[bc seed 1] epoch 19 loss 0.376 val success 0.887
+[bc seed 0] epoch 27 loss 0.289 val success 0.870
+[bc seed 1] epoch 20 loss 0.366 val success 0.873
+[bc seed 0] epoch 28 loss 0.284 val success 0.860
+[bc seed 1] epoch 21 loss 0.356 val success 0.880
+[bc seed 0] epoch 29 loss 0.273 val success 0.883
+[bc seed 1] epoch 22 loss 0.342 val success 0.880
+[bc seed 0] epoch 30 loss 0.264 val success 0.870
+[bc seed 1] epoch 23 loss 0.333 val success 0.867
+[bc seed 0] epoch 31 loss 0.255 val success 0.887
+[bc seed 1] epoch 24 loss 0.327 val success 0.893
+[bc seed 0] epoch 32 loss 0.246 val success 0.883
+[ppo main seed 2] 204,800 steps  train success 0.594  val success 0.677  entropy 1.05  (52s)
+[bc seed 1] epoch 25 loss 0.313 val success 0.887
+[bc seed 0] epoch 33 loss 0.237 val success 0.873
+[bc seed 1] epoch 26 loss 0.302 val success 0.897
+[bc seed 0] epoch 34 loss 0.230 val success 0.893
+[bc seed 1] epoch 27 loss 0.293 val success 0.880
+[bc seed 0] epoch 35 loss 0.223 val success 0.873
+[bc seed 1] epoch 28 loss 0.286 val success 0.880
+[bc seed 0] epoch 36 loss 0.215 val success 0.877
+[bc seed 1] epoch 29 loss 0.275 val success 0.890
+[bc seed 0] epoch 37 loss 0.206 val success 0.893
+[bc seed 1] epoch 30 loss 0.269 val success 0.877
+[bc seed 0] epoch 38 loss 0.193 val success 0.900
+[ppo main seed 1] 204,800 steps  train success 0.653  val success 0.687  entropy 0.94  (53s)
+[bc seed 1] epoch 31 loss 0.259 val success 0.897
+[bc seed 0] epoch 39 loss 0.188 val success 0.900
+[bc seed 1] epoch 32 loss 0.248 val success 0.877
+[bc seed 0] epoch 40 loss 0.178 val success 0.883
+[bc seed 1] epoch 33 loss 0.240 val success 0.877
+[bc seed 0] epoch 41 loss 0.170 val success 0.890
+[bc seed 1] epoch 34 loss 0.231 val success 0.897
+[bc seed 0] epoch 42 loss 0.165 val success 0.890
+[bc seed 1] epoch 35 loss 0.222 val success 0.887
+[bc seed 0] epoch 43 loss 0.157 val success 0.897
+[bc seed 1] epoch 36 loss 0.214 val success 0.893
+[bc seed 0] epoch 44 loss 0.146 val success 0.880
+[bc seed 1] epoch 37 loss 0.204 val success 0.897
+[bc seed 0] epoch 45 loss 0.142 val success 0.883
+[bc seed 0] epoch 46 loss 0.136 val success 0.897
+[bc seed 1] epoch 38 loss 0.196 val success 0.903
+[bc seed 0] epoch 47 loss 0.131 val success 0.870
+[bc seed 1] epoch 39 loss 0.193 val success 0.887
+[ppo deterministic seed 1] 102,400 steps  train success 0.600  val success 0.670  entropy 1.30  (22s)
+[bc seed 0] epoch 48 loss 0.122 val success 0.893
+[bc seed 1] epoch 40 loss 0.180 val success 0.893
+[ppo deterministic seed 0] 204,800 steps  train success 0.822  val success 0.870  entropy 0.84  (56s)
+[bc seed 0] epoch 49 loss 0.115 val success 0.897
+[bc seed 1] epoch 41 loss 0.173 val success 0.890
+[bc seed 0] epoch 50 loss 0.109 val success 0.887
+[bc seed 1] epoch 42 loss 0.166 val success 0.893
+[bc seed 0] epoch 51 loss 0.101 val success 0.903
+[bc seed 1] epoch 43 loss 0.158 val success 0.897
+[bc seed 0] epoch 52 loss 0.096 val success 0.897
+[bc seed 1] epoch 44 loss 0.150 val success 0.897
+[bc seed 0] epoch 53 loss 0.091 val success 0.887
+[bc seed 1] epoch 45 loss 0.142 val success 0.900
+[bc seed 0] epoch 54 loss 0.084 val success 0.897
+[bc seed 1] epoch 46 loss 0.138 val success 0.910
+[bc seed 0] epoch 55 loss 0.078 val success 0.877
+[bc seed 1] epoch 47 loss 0.132 val success 0.913
+[bc seed 0] epoch 56 loss 0.075 val success 0.880
+[bc seed 1] epoch 48 loss 0.123 val success 0.910
+[bc seed 0] epoch 57 loss 0.071 val success 0.863
+[bc seed 1] epoch 49 loss 0.116 val success 0.890
+[bc seed 0] epoch 58 loss 0.067 val success 0.880
+[bc seed 1] epoch 50 loss 0.110 val success 0.903
+[bc seed 0] epoch 59 loss 0.062 val success 0.883
+[ppo main seed 0] 256,000 steps  train success 0.685  val success 0.733  entropy 0.88  (58s)
+[bc seed 1] epoch 51 loss 0.104 val success 0.917
+[bc seed 0] epoch 60 loss 0.059 val success 0.897
+[bc seed 1] epoch 52 loss 0.098 val success 0.900
+[bc seed 1] epoch 53 loss 0.094 val success 0.907
+[bc seed 1] epoch 54 loss 0.089 val success 0.913
+[bc seed 1] epoch 55 loss 0.082 val success 0.903
+[bc seed 1] epoch 56 loss 0.076 val success 0.913
+[bc seed 1] epoch 57 loss 0.072 val success 0.903
+[bc seed 1] epoch 58 loss 0.068 val success 0.913
+$ /workspace/venv-sr/bin/python scripts/train_ppo.py --seed 2 --variant deterministic
+[bc seed 1] epoch 59 loss 0.064 val success 0.907
+[bc seed 1] epoch 60 loss 0.060 val success 0.907
+[ppo main seed 2] 256,000 steps  train success 0.690  val success 0.703  entropy 0.86  (62s)
+$ /workspace/venv-sr/bin/python scripts/train_bc.py --seed 2 --variant deterministic
+[ppo main seed 1] 256,000 steps  train success 0.723  val success 0.773  entropy 0.86  (63s)
+[ppo deterministic seed 1] 153,600 steps  train success 0.768  val success 0.863  entropy 1.02  (32s)
+[ppo deterministic seed 0] 256,000 steps  train success 0.891  val success 0.917  entropy 0.75  (68s)
+[ppo main seed 0] 307,200 steps  train success 0.720  val success 0.793  entropy 0.74  (69s)
+[bc seed 2] epoch 1 loss 2.228 val success 0.070
+[bc seed 2] epoch 2 loss 1.598 val success 0.350
+[bc seed 2] epoch 3 loss 1.098 val success 0.657
+[bc seed 2] epoch 4 loss 0.808 val success 0.763
+[bc seed 2] epoch 5 loss 0.665 val success 0.817
+[bc seed 2] epoch 6 loss 0.598 val success 0.840
+[ppo deterministic seed 2] 51,200 steps  train success 0.186  val success 0.177  entropy 1.94  (11s)
+[bc seed 2] epoch 7 loss 0.556 val success 0.830
+[bc seed 2] epoch 8 loss 0.537 val success 0.843
+[ppo main seed 2] 307,200 steps  train success 0.730  val success 0.773  entropy 0.78  (73s)
+[bc seed 2] epoch 9 loss 0.511 val success 0.857
+[ppo main seed 1] 307,200 steps  train success 0.689  val success 0.760  entropy 0.78  (73s)
+[bc seed 2] epoch 10 loss 0.485 val success 0.827
+[bc seed 2] epoch 11 loss 0.473 val success 0.840
+[bc seed 2] epoch 12 loss 0.463 val success 0.850
+[bc seed 2] epoch 13 loss 0.440 val success 0.850
+[bc seed 2] epoch 14 loss 0.427 val success 0.843
+[bc seed 2] epoch 15 loss 0.421 val success 0.863
+[bc seed 2] epoch 16 loss 0.409 val success 0.837
+[bc seed 2] epoch 17 loss 0.407 val success 0.853
+[bc seed 2] epoch 18 loss 0.387 val success 0.853
+[bc seed 2] epoch 19 loss 0.379 val success 0.857
+[bc seed 2] epoch 20 loss 0.377 val success 0.870
+[ppo deterministic seed 1] 204,800 steps  train success 0.844  val success 0.880  entropy 0.82  (43s)
+[bc seed 2] epoch 21 loss 0.355 val success 0.863
+[bc seed 2] epoch 22 loss 0.345 val success 0.877
+[bc seed 2] epoch 23 loss 0.350 val success 0.863
+[bc seed 2] epoch 24 loss 0.368 val success 0.863
+[bc seed 2] epoch 25 loss 0.344 val success 0.880
+[bc seed 2] epoch 26 loss 0.319 val success 0.877
+[bc seed 2] epoch 27 loss 0.302 val success 0.880
+[ppo deterministic seed 0] 307,200 steps  train success 0.854  val success 0.903  entropy 0.69  (78s)
+[bc seed 2] epoch 28 loss 0.297 val success 0.867
+[bc seed 2] epoch 29 loss 0.292 val success 0.867
+[bc seed 2] epoch 30 loss 0.284 val success 0.867
+[bc seed 2] epoch 31 loss 0.279 val success 0.867
+[bc seed 2] epoch 32 loss 0.269 val success 0.890
+[ppo main seed 0] 358,400 steps  train success 0.753  val success 0.780  entropy 0.74  (79s)
+[bc seed 2] epoch 33 loss 0.256 val success 0.877
+[bc seed 2] epoch 34 loss 0.249 val success 0.903
+[bc seed 2] epoch 35 loss 0.236 val success 0.860
+[bc seed 2] epoch 36 loss 0.235 val success 0.877
+[bc seed 2] epoch 37 loss 0.224 val success 0.877
+[bc seed 2] epoch 38 loss 0.221 val success 0.890
+[bc seed 2] epoch 39 loss 0.209 val success 0.887
+[bc seed 2] epoch 40 loss 0.201 val success 0.883
+[bc seed 2] epoch 41 loss 0.205 val success 0.893
+[bc seed 2] epoch 42 loss 0.208 val success 0.887
+[bc seed 2] epoch 43 loss 0.183 val success 0.890
+[bc seed 2] epoch 44 loss 0.172 val success 0.897
+[bc seed 2] epoch 45 loss 0.169 val success 0.893
+[ppo deterministic seed 2] 102,400 steps  train success 0.595  val success 0.657  entropy 1.31  (22s)
+[bc seed 2] epoch 46 loss 0.158 val success 0.890
+[bc seed 2] epoch 47 loss 0.155 val success 0.893
+[ppo main seed 2] 358,400 steps  train success 0.747  val success 0.813  entropy 0.76  (84s)
+[bc seed 2] epoch 48 loss 0.149 val success 0.897
+[bc seed 2] epoch 49 loss 0.144 val success 0.903
+[bc seed 2] epoch 50 loss 0.145 val success 0.900
+[bc seed 2] epoch 51 loss 0.132 val success 0.910
+[ppo main seed 1] 358,400 steps  train success 0.743  val success 0.797  entropy 0.70  (85s)
+[bc seed 2] epoch 52 loss 0.126 val success 0.893
+[bc seed 2] epoch 53 loss 0.120 val success 0.900
+[bc seed 2] epoch 54 loss 0.115 val success 0.893
+[bc seed 2] epoch 55 loss 0.117 val success 0.903
+[bc seed 2] epoch 56 loss 0.101 val success 0.897
+[bc seed 2] epoch 57 loss 0.100 val success 0.893
+[bc seed 2] epoch 58 loss 0.095 val success 0.903
+[bc seed 2] epoch 59 loss 0.084 val success 0.900
+[bc seed 2] epoch 60 loss 0.083 val success 0.887
+[ppo deterministic seed 1] 256,000 steps  train success 0.870  val success 0.930  entropy 0.71  (54s)
+$ /workspace/venv-sr/bin/python scripts/train_ppo.py --seed 0 --variant no_undo
+[ppo deterministic seed 0] 358,400 steps  train success 0.887  val success 0.913  entropy 0.61  (89s)
+[ppo main seed 0] 409,600 steps  train success 0.757  val success 0.783  entropy 0.72  (91s)
+[ppo deterministic seed 2] 153,600 steps  train success 0.754  val success 0.827  entropy 1.04  (34s)
+[ppo main seed 1] 409,600 steps  train success 0.781  val success 0.787  entropy 0.68  (96s)
+[ppo main seed 2] 409,600 steps  train success 0.761  val success 0.797  entropy 0.71  (97s)
+[ppo deterministic seed 1] 307,200 steps  train success 0.900  val success 0.910  entropy 0.69  (65s)
+[ppo deterministic seed 0] 409,600 steps  train success 0.906  val success 0.930  entropy 0.59  (100s)
+[ppo main seed 0] 460,800 steps  train success 0.764  val success 0.783  entropy 0.67  (101s)
+[ppo no_undo seed 0] 51,200 steps  train success 0.117  val success 0.123  entropy 2.05  (13s)
+[ppo main seed 1] 460,800 steps  train success 0.775  val success 0.787  entropy 0.69  (106s)
+[ppo deterministic seed 2] 204,800 steps  train success 0.883  val success 0.883  entropy 0.85  (45s)
+[ppo main seed 2] 460,800 steps  train success 0.762  val success 0.800  entropy 0.68  (107s)
+[ppo deterministic seed 1] 358,400 steps  train success 0.878  val success 0.903  entropy 0.65  (76s)
+[ppo deterministic seed 0] 460,800 steps  train success 0.905  val success 0.920  entropy 0.60  (111s)
+[ppo main seed 0] 512,000 steps  train success 0.810  val success 0.813  entropy 0.63  (112s)
+[ppo main seed 1] 512,000 steps  train success 0.780  val success 0.797  entropy 0.64  (116s)
+[ppo no_undo seed 0] 102,400 steps  train success 0.392  val success 0.440  entropy 1.45  (27s)
+[ppo deterministic seed 2] 256,000 steps  train success 0.891  val success 0.900  entropy 0.75  (56s)
+[ppo main seed 2] 512,000 steps  train success 0.763  val success 0.820  entropy 0.69  (119s)
+[ppo deterministic seed 1] 409,600 steps  train success 0.895  val success 0.923  entropy 0.64  (87s)
+[ppo main seed 0] 563,200 steps  train success 0.759  val success 0.797  entropy 0.64  (122s)
+[ppo deterministic seed 0] 512,000 steps  train success 0.921  val success 0.933  entropy 0.55  (123s)
+[ppo main seed 1] 563,200 steps  train success 0.780  val success 0.813  entropy 0.63  (127s)
+[ppo deterministic seed 2] 307,200 steps  train success 0.875  val success 0.903  entropy 0.68  (68s)
+[ppo no_undo seed 0] 153,600 steps  train success 0.573  val success 0.650  entropy 1.13  (40s)
+[ppo main seed 2] 563,200 steps  train success 0.772  val success 0.830  entropy 0.63  (130s)
+[ppo deterministic seed 1] 460,800 steps  train success 0.905  val success 0.913  entropy 0.59  (99s)
+[ppo main seed 0] 614,400 steps  train success 0.783  val success 0.817  entropy 0.62  (133s)
+[ppo deterministic seed 0] 563,200 steps  train success 0.895  val success 0.930  entropy 0.56  (135s)
+[ppo main seed 1] 614,400 steps  train success 0.785  val success 0.817  entropy 0.64  (138s)
+[ppo no_undo seed 0] 204,800 steps  train success 0.686  val success 0.757  entropy 0.89  (54s)
+[ppo deterministic seed 2] 358,400 steps  train success 0.874  val success 0.920  entropy 0.64  (82s)
+[ppo main seed 0] 665,600 steps  train success 0.826  val success 0.830  entropy 0.61  (143s)
+[ppo deterministic seed 1] 512,000 steps  train success 0.884  val success 0.933  entropy 0.57  (110s)
+[ppo main seed 2] 614,400 steps  train success 0.801  val success 0.830  entropy 0.63  (144s)
+[ppo deterministic seed 0] 614,400 steps  train success 0.919  val success 0.950  entropy 0.56  (146s)
+[ppo main seed 1] 665,600 steps  train success 0.775  val success 0.813  entropy 0.66  (150s)
+[ppo main seed 0] 716,800 steps  train success 0.787  val success 0.853  entropy 0.63  (154s)
+[ppo no_undo seed 0] 256,000 steps  train success 0.727  val success 0.813  entropy 0.77  (65s)
+[ppo deterministic seed 2] 409,600 steps  train success 0.929  val success 0.907  entropy 0.58  (95s)
+[ppo deterministic seed 1] 563,200 steps  train success 0.889  val success 0.950  entropy 0.55  (124s)
+[ppo deterministic seed 0] 665,600 steps  train success 0.894  val success 0.920  entropy 0.57  (158s)
+[ppo main seed 2] 665,600 steps  train success 0.795  val success 0.847  entropy 0.60  (160s)
+[ppo main seed 1] 716,800 steps  train success 0.831  val success 0.823  entropy 0.61  (160s)
+[ppo main seed 0] 768,000 steps  train success 0.809  val success 0.843  entropy 0.59  (165s)
+[ppo no_undo seed 0] 307,200 steps  train success 0.739  val success 0.813  entropy 0.76  (76s)
+[ppo deterministic seed 2] 460,800 steps  train success 0.925  val success 0.913  entropy 0.57  (106s)
+[ppo deterministic seed 0] 716,800 steps  train success 0.925  val success 0.943  entropy 0.55  (170s)
+[ppo deterministic seed 1] 614,400 steps  train success 0.918  val success 0.930  entropy 0.52  (137s)
+[ppo main seed 2] 716,800 steps  train success 0.825  val success 0.850  entropy 0.60  (171s)
+[ppo main seed 1] 768,000 steps  train success 0.828  val success 0.860  entropy 0.61  (171s)
+[ppo no_undo seed 0] 358,400 steps  train success 0.798  val success 0.823  entropy 0.66  (87s)
+[ppo main seed 0] 819,200 steps  train success 0.827  val success 0.870  entropy 0.60  (177s)
+[ppo deterministic seed 2] 512,000 steps  train success 0.907  val success 0.927  entropy 0.58  (117s)
+[ppo main seed 2] 768,000 steps  train success 0.832  val success 0.867  entropy 0.60  (181s)
+[ppo deterministic seed 0] 768,000 steps  train success 0.933  val success 0.937  entropy 0.55  (182s)
+[ppo deterministic seed 1] 665,600 steps  train success 0.928  val success 0.923  entropy 0.52  (148s)
+[ppo main seed 1] 819,200 steps  train success 0.801  val success 0.813  entropy 0.61  (182s)
+[ppo no_undo seed 0] 409,600 steps  train success 0.801  val success 0.830  entropy 0.64  (97s)
+[ppo main seed 0] 870,400 steps  train success 0.849  val success 0.850  entropy 0.56  (189s)
+[ppo deterministic seed 2] 563,200 steps  train success 0.934  val success 0.927  entropy 0.55  (129s)
+[ppo main seed 2] 819,200 steps  train success 0.796  val success 0.857  entropy 0.58  (193s)
+[ppo deterministic seed 1] 716,800 steps  train success 0.921  val success 0.927  entropy 0.52  (160s)
+[ppo main seed 1] 870,400 steps  train success 0.810  val success 0.863  entropy 0.63  (194s)
+[ppo deterministic seed 0] 819,200 steps  train success 0.931  val success 0.930  entropy 0.52  (196s)
+[ppo no_undo seed 0] 460,800 steps  train success 0.813  val success 0.843  entropy 0.61  (110s)
+[ppo main seed 0] 921,600 steps  train success 0.804  val success 0.870  entropy 0.59  (200s)
+[ppo deterministic seed 2] 614,400 steps  train success 0.912  val success 0.947  entropy 0.53  (141s)
+[ppo main seed 2] 870,400 steps  train success 0.803  val success 0.883  entropy 0.60  (204s)
+[ppo deterministic seed 1] 768,000 steps  train success 0.948  val success 0.923  entropy 0.48  (174s)
+[ppo main seed 1] 921,600 steps  train success 0.825  val success 0.853  entropy 0.62  (208s)
+[ppo deterministic seed 0] 870,400 steps  train success 0.947  val success 0.953  entropy 0.52  (208s)
+[ppo no_undo seed 0] 512,000 steps  train success 0.826  val success 0.843  entropy 0.59  (121s)
+[ppo main seed 0] 972,800 steps  train success 0.834  val success 0.870  entropy 0.58  (212s)
+[ppo deterministic seed 2] 665,600 steps  train success 0.926  val success 0.943  entropy 0.50  (154s)
+[ppo main seed 2] 921,600 steps  train success 0.815  val success 0.843  entropy 0.60  (216s)
+[ppo main seed 1] 972,800 steps  train success 0.858  val success 0.863  entropy 0.58  (219s)
+[ppo deterministic seed 1] 819,200 steps  train success 0.890  val success 0.933  entropy 0.53  (187s)
+[ppo deterministic seed 0] 921,600 steps  train success 0.949  val success 0.963  entropy 0.50  (221s)
+[ppo no_undo seed 0] 563,200 steps  train success 0.791  val success 0.863  entropy 0.64  (132s)
+[ppo main seed 0] 1,024,000 steps  train success 0.833  val success 0.880  entropy 0.61  (224s)
+[ppo main seed 2] 972,800 steps  train success 0.849  val success 0.850  entropy 0.55  (229s)
+[ppo deterministic seed 2] 716,800 steps  train success 0.920  val success 0.953  entropy 0.54  (168s)
+[ppo main seed 1] 1,024,000 steps  train success 0.808  val success 0.893  entropy 0.60  (231s)
+[ppo deterministic seed 0] 972,800 steps  train success 0.929  val success 0.947  entropy 0.52  (233s)
+[ppo deterministic seed 1] 870,400 steps  train success 0.954  val success 0.940  entropy 0.49  (199s)
+[ppo no_undo seed 0] 614,400 steps  train success 0.813  val success 0.860  entropy 0.61  (144s)
+[ppo main seed 0] 1,075,200 steps  train success 0.830  val success 0.883  entropy 0.55  (236s)
+[ppo main seed 2] 1,024,000 steps  train success 0.834  val success 0.853  entropy 0.59  (241s)
+[ppo deterministic seed 2] 768,000 steps  train success 0.935  val success 0.947  entropy 0.52  (180s)
+[ppo main seed 1] 1,075,200 steps  train success 0.835  val success 0.910  entropy 0.56  (241s)
+[ppo no_undo seed 0] 665,600 steps  train success 0.810  val success 0.867  entropy 0.61  (155s)
+[ppo deterministic seed 1] 921,600 steps  train success 0.906  val success 0.937  entropy 0.50  (211s)
+[ppo deterministic seed 0] 1,024,000 steps  train success 0.936  val success 0.960  entropy 0.51  (246s)
+[ppo main seed 0] 1,126,400 steps  train success 0.853  val success 0.873  entropy 0.57  (246s)
+[ppo main seed 2] 1,075,200 steps  train success 0.844  val success 0.840  entropy 0.55  (252s)
+[ppo main seed 1] 1,126,400 steps  train success 0.839  val success 0.820  entropy 0.58  (252s)
+[ppo deterministic seed 2] 819,200 steps  train success 0.914  val success 0.940  entropy 0.50  (192s)
+[ppo no_undo seed 0] 716,800 steps  train success 0.789  val success 0.853  entropy 0.64  (166s)
+[ppo deterministic seed 1] 972,800 steps  train success 0.923  val success 0.957  entropy 0.54  (223s)
+[ppo deterministic seed 0] 1,075,200 steps  train success 0.931  val success 0.950  entropy 0.50  (258s)
+[ppo main seed 0] 1,177,600 steps  train success 0.851  val success 0.890  entropy 0.54  (259s)
+[ppo main seed 2] 1,126,400 steps  train success 0.833  val success 0.837  entropy 0.57  (265s)
+[ppo deterministic seed 2] 870,400 steps  train success 0.907  val success 0.943  entropy 0.51  (204s)
+[ppo main seed 1] 1,177,600 steps  train success 0.817  val success 0.867  entropy 0.59  (266s)
+[ppo no_undo seed 0] 768,000 steps  train success 0.819  val success 0.850  entropy 0.60  (179s)
+[ppo deterministic seed 1] 1,024,000 steps  train success 0.936  val success 0.943  entropy 0.49  (237s)
+[ppo deterministic seed 0] 1,126,400 steps  train success 0.959  val success 0.957  entropy 0.47  (271s)
+[ppo main seed 0] 1,228,800 steps  train success 0.853  val success 0.903  entropy 0.54  (274s)
+[ppo main seed 2] 1,177,600 steps  train success 0.859  val success 0.867  entropy 0.55  (276s)
+[ppo deterministic seed 2] 921,600 steps  train success 0.931  val success 0.943  entropy 0.49  (216s)
+[ppo main seed 1] 1,228,800 steps  train success 0.862  val success 0.873  entropy 0.58  (280s)
+[ppo no_undo seed 0] 819,200 steps  train success 0.848  val success 0.867  entropy 0.56  (191s)
+[ppo deterministic seed 0] 1,177,600 steps  train success 0.947  val success 0.977  entropy 0.46  (282s)
+[ppo deterministic seed 1] 1,075,200 steps  train success 0.938  val success 0.957  entropy 0.48  (249s)
+[ppo main seed 0] 1,280,000 steps  train success 0.850  val success 0.900  entropy 0.53  (286s)
+[ppo main seed 2] 1,228,800 steps  train success 0.871  val success 0.867  entropy 0.56  (287s)
+[ppo deterministic seed 2] 972,800 steps  train success 0.939  val success 0.957  entropy 0.48  (227s)
+[ppo main seed 1] 1,280,000 steps  train success 0.881  val success 0.897  entropy 0.55  (291s)
+[ppo no_undo seed 0] 870,400 steps  train success 0.816  val success 0.877  entropy 0.58  (203s)
+[ppo deterministic seed 0] 1,228,800 steps  train success 0.937  val success 0.970  entropy 0.51  (294s)
+[ppo deterministic seed 1] 1,126,400 steps  train success 0.933  val success 0.953  entropy 0.49  (261s)
+[ppo main seed 0] 1,331,200 steps  train success 0.814  val success 0.877  entropy 0.58  (297s)
+[ppo main seed 2] 1,280,000 steps  train success 0.839  val success 0.873  entropy 0.61  (298s)
+[ppo deterministic seed 2] 1,024,000 steps  train success 0.923  val success 0.950  entropy 0.48  (240s)
+[ppo main seed 1] 1,331,200 steps  train success 0.857  val success 0.890  entropy 0.54  (302s)
+[ppo no_undo seed 0] 921,600 steps  train success 0.855  val success 0.883  entropy 0.56  (214s)
+[ppo deterministic seed 0] 1,280,000 steps  train success 0.940  val success 0.963  entropy 0.48  (306s)
+[ppo deterministic seed 1] 1,177,600 steps  train success 0.949  val success 0.963  entropy 0.47  (274s)
+[ppo main seed 0] 1,382,400 steps  train success 0.833  val success 0.910  entropy 0.55  (308s)
+[ppo main seed 2] 1,331,200 steps  train success 0.869  val success 0.887  entropy 0.56  (309s)
+[ppo deterministic seed 2] 1,075,200 steps  train success 0.947  val success 0.973  entropy 0.46  (252s)
+[ppo no_undo seed 0] 972,800 steps  train success 0.845  val success 0.890  entropy 0.54  (224s)
+[ppo main seed 1] 1,382,400 steps  train success 0.859  val success 0.880  entropy 0.56  (314s)
+[ppo deterministic seed 0] 1,331,200 steps  train success 0.953  val success 0.977  entropy 0.48  (318s)
+[ppo main seed 0] 1,433,600 steps  train success 0.882  val success 0.877  entropy 0.53  (319s)
+[ppo main seed 2] 1,382,400 steps  train success 0.842  val success 0.893  entropy 0.57  (320s)
+[ppo deterministic seed 1] 1,228,800 steps  train success 0.966  val success 0.950  entropy 0.45  (287s)
+[ppo no_undo seed 0] 1,024,000 steps  train success 0.854  val success 0.870  entropy 0.57  (235s)
+[ppo main seed 1] 1,433,600 steps  train success 0.874  val success 0.887  entropy 0.55  (325s)
+[ppo deterministic seed 2] 1,126,400 steps  train success 0.941  val success 0.957  entropy 0.46  (264s)
+[ppo deterministic seed 0] 1,382,400 steps  train success 0.938  val success 0.967  entropy 0.47  (330s)
+[ppo main seed 0] 1,484,800 steps  train success 0.872  val success 0.887  entropy 0.56  (330s)
+[ppo main seed 2] 1,433,600 steps  train success 0.841  val success 0.900  entropy 0.56  (331s)
+[ppo deterministic seed 1] 1,280,000 steps  train success 0.934  val success 0.947  entropy 0.49  (298s)
+[ppo no_undo seed 0] 1,075,200 steps  train success 0.839  val success 0.893  entropy 0.55  (246s)
+[ppo deterministic seed 2] 1,177,600 steps  train success 0.930  val success 0.963  entropy 0.52  (275s)
+[ppo main seed 1] 1,484,800 steps  train success 0.877  val success 0.900  entropy 0.54  (337s)
+[ppo main seed 0] 1,536,000 steps  train success 0.851  val success 0.907  entropy 0.57  (341s)
+[ppo main seed 2] 1,484,800 steps  train success 0.859  val success 0.907  entropy 0.58  (341s)
+[ppo deterministic seed 0] 1,433,600 steps  train success 0.953  val success 0.973  entropy 0.47  (342s)
+[ppo deterministic seed 1] 1,331,200 steps  train success 0.943  val success 0.960  entropy 0.45  (312s)
+[ppo no_undo seed 0] 1,126,400 steps  train success 0.853  val success 0.877  entropy 0.54  (257s)
+[ppo main seed 1] 1,536,000 steps  train success 0.861  val success 0.907  entropy 0.57  (348s)
+[ppo deterministic seed 2] 1,228,800 steps  train success 0.951  val success 0.960  entropy 0.47  (287s)
+[ppo main seed 0] 1,587,200 steps  train success 0.853  val success 0.863  entropy 0.57  (352s)
+[ppo main seed 2] 1,536,000 steps  train success 0.860  val success 0.890  entropy 0.56  (353s)
+[ppo deterministic seed 0] 1,484,800 steps  train success 0.952  val success 0.973  entropy 0.49  (353s)
+[ppo no_undo seed 0] 1,177,600 steps  train success 0.838  val success 0.893  entropy 0.56  (268s)
+[ppo main seed 1] 1,587,200 steps  train success 0.858  val success 0.893  entropy 0.56  (359s)
+[ppo deterministic seed 1] 1,382,400 steps  train success 0.950  val success 0.967  entropy 0.46  (326s)
+[ppo deterministic seed 2] 1,280,000 steps  train success 0.932  val success 0.953  entropy 0.46  (299s)
+[ppo main seed 0] 1,638,400 steps  train success 0.863  val success 0.897  entropy 0.52  (363s)
+[ppo main seed 2] 1,587,200 steps  train success 0.866  val success 0.887  entropy 0.55  (364s)
+[ppo deterministic seed 0] 1,536,000 steps  train success 0.947  val success 0.977  entropy 0.48  (367s)
+[ppo no_undo seed 0] 1,228,800 steps  train success 0.865  val success 0.897  entropy 0.54  (279s)
+[ppo main seed 1] 1,638,400 steps  train success 0.858  val success 0.907  entropy 0.55  (370s)
+[ppo deterministic seed 1] 1,433,600 steps  train success 0.947  val success 0.963  entropy 0.46  (338s)
+[ppo deterministic seed 2] 1,331,200 steps  train success 0.945  val success 0.947  entropy 0.47  (311s)
+[ppo main seed 0] 1,689,600 steps  train success 0.900  val success 0.893  entropy 0.52  (374s)
+[ppo main seed 2] 1,638,400 steps  train success 0.850  val success 0.890  entropy 0.56  (374s)
+[ppo deterministic seed 0] 1,587,200 steps  train success 0.952  val success 0.967  entropy 0.46  (378s)
+[ppo no_undo seed 0] 1,280,000 steps  train success 0.842  val success 0.897  entropy 0.56  (290s)
+[ppo main seed 1] 1,689,600 steps  train success 0.895  val success 0.913  entropy 0.54  (381s)
+[ppo deterministic seed 1] 1,484,800 steps  train success 0.932  val success 0.967  entropy 0.47  (350s)
+[ppo deterministic seed 2] 1,382,400 steps  train success 0.942  val success 0.960  entropy 0.46  (323s)
+[ppo main seed 0] 1,740,800 steps  train success 0.882  val success 0.907  entropy 0.55  (385s)
+[ppo main seed 2] 1,689,600 steps  train success 0.882  val success 0.907  entropy 0.56  (385s)
+[ppo no_undo seed 0] 1,331,200 steps  train success 0.880  val success 0.880  entropy 0.53  (300s)
+[ppo deterministic seed 0] 1,638,400 steps  train success 0.972  val success 0.960  entropy 0.43  (391s)
+[ppo main seed 1] 1,740,800 steps  train success 0.851  val success 0.920  entropy 0.56  (392s)
+[ppo deterministic seed 1] 1,536,000 steps  train success 0.925  val success 0.967  entropy 0.46  (362s)
+[ppo main seed 2] 1,740,800 steps  train success 0.854  val success 0.890  entropy 0.56  (396s)
+[ppo main seed 0] 1,792,000 steps  train success 0.873  val success 0.913  entropy 0.50  (396s)
+[ppo deterministic seed 2] 1,433,600 steps  train success 0.939  val success 0.947  entropy 0.47  (335s)
+[ppo no_undo seed 0] 1,382,400 steps  train success 0.854  val success 0.913  entropy 0.56  (312s)
+[ppo deterministic seed 0] 1,689,600 steps  train success 0.956  val success 0.970  entropy 0.43  (403s)
+[ppo main seed 1] 1,792,000 steps  train success 0.882  val success 0.930  entropy 0.52  (403s)
+[ppo deterministic seed 1] 1,587,200 steps  train success 0.954  val success 0.970  entropy 0.44  (373s)
+[ppo main seed 0] 1,843,200 steps  train success 0.872  val success 0.887  entropy 0.54  (407s)
+[ppo main seed 2] 1,792,000 steps  train success 0.867  val success 0.903  entropy 0.53  (407s)
+[ppo deterministic seed 2] 1,484,800 steps  train success 0.949  val success 0.960  entropy 0.46  (347s)
+[ppo no_undo seed 0] 1,433,600 steps  train success 0.867  val success 0.897  entropy 0.54  (322s)
+[ppo main seed 1] 1,843,200 steps  train success 0.854  val success 0.903  entropy 0.54  (415s)
+[ppo deterministic seed 0] 1,740,800 steps  train success 0.949  val success 0.963  entropy 0.46  (415s)
+[ppo main seed 0] 1,894,400 steps  train success 0.866  val success 0.917  entropy 0.54  (418s)
+[ppo deterministic seed 1] 1,638,400 steps  train success 0.945  val success 0.973  entropy 0.45  (385s)
+[ppo deterministic seed 2] 1,536,000 steps  train success 0.949  val success 0.967  entropy 0.44  (358s)
+[ppo main seed 2] 1,843,200 steps  train success 0.872  val success 0.917  entropy 0.56  (423s)
+[ppo no_undo seed 0] 1,484,800 steps  train success 0.845  val success 0.900  entropy 0.58  (334s)
+[ppo main seed 1] 1,894,400 steps  train success 0.872  val success 0.910  entropy 0.53  (426s)
+[ppo deterministic seed 0] 1,792,000 steps  train success 0.948  val success 0.960  entropy 0.47  (427s)
+[ppo main seed 0] 1,945,600 steps  train success 0.894  val success 0.897  entropy 0.54  (429s)
+[ppo deterministic seed 1] 1,689,600 steps  train success 0.934  val success 0.967  entropy 0.44  (398s)
+[ppo deterministic seed 2] 1,587,200 steps  train success 0.961  val success 0.973  entropy 0.44  (371s)
+[ppo main seed 2] 1,894,400 steps  train success 0.892  val success 0.903  entropy 0.52  (434s)
+[ppo no_undo seed 0] 1,536,000 steps  train success 0.888  val success 0.903  entropy 0.53  (344s)
+[ppo main seed 1] 1,945,600 steps  train success 0.853  val success 0.923  entropy 0.55  (436s)
+[ppo deterministic seed 0] 1,843,200 steps  train success 0.946  val success 0.970  entropy 0.46  (439s)
+[ppo main seed 0] 1,996,800 steps  train success 0.895  val success 0.893  entropy 0.53  (439s)
+[ppo deterministic seed 1] 1,740,800 steps  train success 0.948  val success 0.973  entropy 0.44  (410s)
+[ppo main seed 2] 1,945,600 steps  train success 0.841  val success 0.880  entropy 0.53  (445s)
+[ppo no_undo seed 0] 1,587,200 steps  train success 0.864  val success 0.917  entropy 0.54  (356s)
+[ppo main seed 1] 1,996,800 steps  train success 0.860  val success 0.913  entropy 0.54  (447s)
+[ppo deterministic seed 2] 1,638,400 steps  train success 0.938  val success 0.963  entropy 0.46  (387s)
+[ppo main seed 0] 2,048,000 steps  train success 0.879  val success 0.903  entropy 0.52  (450s)
+[ppo deterministic seed 0] 1,894,400 steps  train success 0.963  val success 0.963  entropy 0.41  (455s)
+[ppo no_undo seed 0] 1,638,400 steps  train success 0.860  val success 0.897  entropy 0.52  (366s)
+[ppo main seed 2] 1,996,800 steps  train success 0.889  val success 0.900  entropy 0.52  (456s)
+[ppo deterministic seed 1] 1,792,000 steps  train success 0.952  val success 0.977  entropy 0.43  (423s)
+[ppo deterministic seed 2] 1,689,600 steps  train success 0.942  val success 0.983  entropy 0.46  (399s)
+[ppo main seed 1] 2,048,000 steps  train success 0.887  val success 0.913  entropy 0.53  (460s)
+[ppo main seed 0] 2,099,200 steps  train success 0.866  val success 0.920  entropy 0.53  (461s)
+[ppo no_undo seed 0] 1,689,600 steps  train success 0.873  val success 0.920  entropy 0.52  (377s)
+[ppo main seed 2] 2,048,000 steps  train success 0.833  val success 0.910  entropy 0.56  (467s)
+[ppo deterministic seed 1] 1,843,200 steps  train success 0.957  val success 0.973  entropy 0.39  (436s)
+[ppo main seed 0] 2,150,400 steps  train success 0.899  val success 0.920  entropy 0.53  (472s)
+[ppo deterministic seed 2] 1,740,800 steps  train success 0.947  val success 0.970  entropy 0.42  (411s)
+[ppo deterministic seed 0] 1,945,600 steps  train success 0.950  val success 0.970  entropy 0.44  (474s)
+[ppo main seed 1] 2,099,200 steps  train success 0.872  val success 0.907  entropy 0.50  (477s)
+[ppo no_undo seed 0] 1,740,800 steps  train success 0.849  val success 0.907  entropy 0.53  (388s)
+[ppo main seed 2] 2,099,200 steps  train success 0.856  val success 0.903  entropy 0.54  (479s)
+[ppo deterministic seed 1] 1,894,400 steps  train success 0.944  val success 0.973  entropy 0.43  (449s)
+[ppo deterministic seed 2] 1,792,000 steps  train success 0.948  val success 0.970  entropy 0.43  (424s)
+[ppo main seed 0] 2,201,600 steps  train success 0.876  val success 0.930  entropy 0.52  (488s)
+[ppo main seed 1] 2,150,400 steps  train success 0.846  val success 0.913  entropy 0.55  (488s)
+[ppo no_undo seed 0] 1,792,000 steps  train success 0.874  val success 0.920  entropy 0.51  (399s)
+[ppo main seed 2] 2,150,400 steps  train success 0.890  val success 0.917  entropy 0.57  (489s)
+[ppo deterministic seed 0] 1,996,800 steps  train success 0.966  val success 0.973  entropy 0.41  (494s)
+[ppo deterministic seed 1] 1,945,600 steps  train success 0.959  val success 0.973  entropy 0.41  (461s)
+[ppo deterministic seed 0] 2,000,896 steps  train success 0.933  val success 0.973  entropy 0.46  (496s)
+$ /workspace/venv-sr/bin/python scripts/train_bc.py --seed 0 --variant no_undo
+[ppo deterministic seed 2] 1,843,200 steps  train success 0.948  val success 0.970  entropy 0.43  (435s)
+[ppo main seed 1] 2,201,600 steps  train success 0.855  val success 0.923  entropy 0.55  (499s)
+[ppo no_undo seed 0] 1,843,200 steps  train success 0.885  val success 0.920  entropy 0.50  (410s)
+[ppo main seed 2] 2,201,600 steps  train success 0.877  val success 0.923  entropy 0.54  (500s)
+[ppo main seed 0] 2,252,800 steps  train success 0.897  val success 0.920  entropy 0.51  (502s)
+[ppo deterministic seed 1] 1,996,800 steps  train success 0.948  val success 0.977  entropy 0.44  (473s)
+[ppo deterministic seed 1] 2,000,896 steps  train success 0.958  val success 0.973  entropy 0.41  (474s)
+[bc seed 0] epoch 1 loss 2.251 val success 0.210
+[bc seed 0] epoch 2 loss 1.426 val success 0.557
+[ppo deterministic seed 2] 1,894,400 steps  train success 0.949  val success 0.960  entropy 0.43  (447s)
+[bc seed 0] epoch 3 loss 0.938 val success 0.713
+[bc seed 0] epoch 4 loss 0.752 val success 0.760
+[bc seed 0] epoch 5 loss 0.677 val success 0.777
+[ppo main seed 1] 2,252,800 steps  train success 0.870  val success 0.917  entropy 0.51  (510s)
+[bc seed 0] epoch 6 loss 0.625 val success 0.793
+$ /workspace/venv-sr/bin/python scripts/train_ppo.py --seed 1 --variant no_undo
+[bc seed 0] epoch 7 loss 0.593 val success 0.750
+[bc seed 0] epoch 8 loss 0.570 val success 0.790
+[bc seed 0] epoch 9 loss 0.547 val success 0.790
+[bc seed 0] epoch 10 loss 0.524 val success 0.797
+[ppo main seed 2] 2,252,800 steps  train success 0.904  val success 0.910  entropy 0.50  (512s)
+[ppo no_undo seed 0] 1,894,400 steps  train success 0.888  val success 0.923  entropy 0.51  (422s)
+[bc seed 0] epoch 11 loss 0.504 val success 0.787
+[bc seed 0] epoch 12 loss 0.484 val success 0.803
+[bc seed 0] epoch 13 loss 0.472 val success 0.803
+[bc seed 0] epoch 14 loss 0.464 val success 0.807
+[ppo main seed 0] 2,304,000 steps  train success 0.882  val success 0.930  entropy 0.53  (513s)
+[bc seed 0] epoch 15 loss 0.441 val success 0.780
+[bc seed 0] epoch 16 loss 0.425 val success 0.817
+[bc seed 0] epoch 17 loss 0.412 val success 0.813
+[bc seed 0] epoch 18 loss 0.394 val success 0.793
+[bc seed 0] epoch 19 loss 0.381 val success 0.833
+[bc seed 0] epoch 20 loss 0.371 val success 0.817
+[bc seed 0] epoch 21 loss 0.361 val success 0.807
+[bc seed 0] epoch 22 loss 0.349 val success 0.803
+[bc seed 0] epoch 23 loss 0.339 val success 0.810
+[bc seed 0] epoch 24 loss 0.329 val success 0.813
+[bc seed 0] epoch 25 loss 0.313 val success 0.807
+[bc seed 0] epoch 26 loss 0.302 val success 0.827
+[bc seed 0] epoch 27 loss 0.289 val success 0.807
+[bc seed 0] epoch 28 loss 0.280 val success 0.817
+[bc seed 0] epoch 29 loss 0.272 val success 0.823
+[bc seed 0] epoch 30 loss 0.261 val success 0.817
+[bc seed 0] epoch 31 loss 0.250 val success 0.820
+[bc seed 0] epoch 32 loss 0.241 val success 0.813
+[bc seed 0] epoch 33 loss 0.230 val success 0.813
+[bc seed 0] epoch 34 loss 0.222 val success 0.827
+[bc seed 0] epoch 35 loss 0.210 val success 0.823
+[ppo deterministic seed 2] 1,945,600 steps  train success 0.960  val success 0.960  entropy 0.41  (459s)
+[ppo main seed 1] 2,304,000 steps  train success 0.894  val success 0.933  entropy 0.50  (521s)
+[bc seed 0] epoch 36 loss 0.201 val success 0.823
+[bc seed 0] epoch 37 loss 0.194 val success 0.807
+[bc seed 0] epoch 38 loss 0.183 val success 0.813
+[bc seed 0] epoch 39 loss 0.172 val success 0.817
+[bc seed 0] epoch 40 loss 0.166 val success 0.827
+[bc seed 0] epoch 41 loss 0.162 val success 0.830
+[bc seed 0] epoch 42 loss 0.154 val success 0.830
+[ppo main seed 2] 2,304,000 steps  train success 0.853  val success 0.907  entropy 0.55  (523s)
+[ppo no_undo seed 0] 1,945,600 steps  train success 0.870  val success 0.930  entropy 0.49  (434s)
+[bc seed 0] epoch 43 loss 0.143 val success 0.830
+[ppo no_undo seed 1] 51,200 steps  train success 0.142  val success 0.183  entropy 2.06  (12s)
+[bc seed 0] epoch 44 loss 0.135 val success 0.800
+[bc seed 0] epoch 45 loss 0.127 val success 0.833
+[bc seed 0] epoch 46 loss 0.124 val success 0.800
+[bc seed 0] epoch 47 loss 0.110 val success 0.800
+[ppo main seed 0] 2,355,200 steps  train success 0.907  val success 0.927  entropy 0.50  (525s)
+[bc seed 0] epoch 48 loss 0.103 val success 0.817
+[bc seed 0] epoch 49 loss 0.097 val success 0.813
+[bc seed 0] epoch 50 loss 0.094 val success 0.833
+[bc seed 0] epoch 51 loss 0.090 val success 0.813
+[bc seed 0] epoch 52 loss 0.083 val success 0.817
+[bc seed 0] epoch 53 loss 0.077 val success 0.823
+[bc seed 0] epoch 54 loss 0.071 val success 0.800
+[bc seed 0] epoch 55 loss 0.066 val success 0.817
+[bc seed 0] epoch 56 loss 0.062 val success 0.803
+[bc seed 0] epoch 57 loss 0.057 val success 0.793
+[bc seed 0] epoch 58 loss 0.054 val success 0.817
+[bc seed 0] epoch 59 loss 0.050 val success 0.807
+[bc seed 0] epoch 60 loss 0.046 val success 0.823
+$ /workspace/venv-sr/bin/python scripts/train_bc.py --seed 1 --variant no_undo
+[ppo main seed 1] 2,355,200 steps  train success 0.886  val success 0.923  entropy 0.51  (532s)
+[ppo deterministic seed 2] 1,996,800 steps  train success 0.947  val success 0.967  entropy 0.43  (471s)
+[ppo deterministic seed 2] 2,000,896 steps  train success 0.951  val success 0.967  entropy 0.42  (472s)
+[ppo main seed 2] 2,355,200 steps  train success 0.879  val success 0.917  entropy 0.52  (534s)
+$ /workspace/venv-sr/bin/python scripts/train_ppo.py --seed 2 --variant no_undo
+[ppo no_undo seed 0] 1,996,800 steps  train success 0.871  val success 0.927  entropy 0.54  (445s)
+[ppo no_undo seed 1] 102,400 steps  train success 0.423  val success 0.480  entropy 1.41  (23s)
+[ppo no_undo seed 0] 2,000,896 steps  train success 0.861  val success 0.927  entropy 0.52  (446s)
+[ppo main seed 0] 2,406,400 steps  train success 0.890  val success 0.913  entropy 0.53  (536s)
+$ /workspace/venv-sr/bin/python scripts/train_bc.py --seed 2 --variant no_undo
+[bc seed 1] epoch 1 loss 2.278 val success 0.120
+[bc seed 1] epoch 2 loss 1.434 val success 0.567
+[bc seed 1] epoch 3 loss 0.941 val success 0.727
+[bc seed 1] epoch 4 loss 0.756 val success 0.717
+[bc seed 1] epoch 5 loss 0.687 val success 0.753
+[ppo main seed 1] 2,406,400 steps  train success 0.896  val success 0.917  entropy 0.52  (543s)
+[bc seed 1] epoch 6 loss 0.636 val success 0.787
+[bc seed 1] epoch 7 loss 0.602 val success 0.783
+[bc seed 1] epoch 8 loss 0.568 val success 0.783
+[bc seed 1] epoch 9 loss 0.546 val success 0.790
+[bc seed 1] epoch 10 loss 0.527 val success 0.787
+[ppo main seed 2] 2,406,400 steps  train success 0.899  val success 0.910  entropy 0.53  (545s)
+[bc seed 1] epoch 11 loss 0.508 val success 0.793
+[bc seed 1] epoch 12 loss 0.493 val success 0.797
+[bc seed 1] epoch 13 loss 0.474 val success 0.797
+[ppo no_undo seed 1] 153,600 steps  train success 0.554  val success 0.657  entropy 1.14  (35s)
+[bc seed 1] epoch 14 loss 0.454 val success 0.777
+[bc seed 1] epoch 15 loss 0.443 val success 0.790
+[bc seed 1] epoch 16 loss 0.424 val success 0.810
+[bc seed 2] epoch 1 loss 2.254 val success 0.190
+[bc seed 1] epoch 17 loss 0.410 val success 0.820
+[bc seed 2] epoch 2 loss 1.408 val success 0.573
+[bc seed 1] epoch 18 loss 0.393 val success 0.797
+[ppo main seed 0] 2,457,600 steps  train success 0.842  val success 0.903  entropy 0.52  (548s)
+[bc seed 2] epoch 3 loss 0.930 val success 0.703
+[bc seed 1] epoch 19 loss 0.380 val success 0.810
+[bc seed 2] epoch 4 loss 0.747 val success 0.737
+[bc seed 1] epoch 20 loss 0.371 val success 0.790
+[ppo no_undo seed 2] 51,200 steps  train success 0.150  val success 0.097  entropy 2.04  (13s)
+[bc seed 2] epoch 5 loss 0.667 val success 0.753
+[bc seed 1] epoch 21 loss 0.362 val success 0.800
+[bc seed 2] epoch 6 loss 0.611 val success 0.780
+[bc seed 1] epoch 22 loss 0.344 val success 0.813
+[bc seed 2] epoch 7 loss 0.577 val success 0.787
+[bc seed 1] epoch 23 loss 0.332 val success 0.813
+[bc seed 2] epoch 8 loss 0.548 val success 0.743
+[bc seed 1] epoch 24 loss 0.319 val success 0.817
+[bc seed 1] epoch 25 loss 0.311 val success 0.813
+[bc seed 2] epoch 9 loss 0.524 val success 0.787
+[bc seed 1] epoch 26 loss 0.296 val success 0.807
+[bc seed 2] epoch 10 loss 0.505 val success 0.797
+[bc seed 1] epoch 27 loss 0.285 val success 0.817
+[bc seed 2] epoch 11 loss 0.482 val success 0.800
+[bc seed 1] epoch 28 loss 0.274 val success 0.807
+[bc seed 2] epoch 12 loss 0.464 val success 0.790
+[bc seed 1] epoch 29 loss 0.265 val success 0.823
+[bc seed 2] epoch 13 loss 0.451 val success 0.787
+[bc seed 1] epoch 30 loss 0.252 val success 0.847
+[bc seed 1] epoch 31 loss 0.242 val success 0.817
+[bc seed 2] epoch 14 loss 0.434 val success 0.820
+[bc seed 1] epoch 32 loss 0.230 val success 0.810
+[bc seed 2] epoch 15 loss 0.419 val success 0.807
+[bc seed 1] epoch 33 loss 0.223 val success 0.820
+[bc seed 2] epoch 16 loss 0.402 val success 0.787
+[bc seed 2] epoch 17 loss 0.390 val success 0.820
+[bc seed 1] epoch 34 loss 0.214 val success 0.803
+[bc seed 2] epoch 18 loss 0.375 val success 0.817
+[bc seed 1] epoch 35 loss 0.203 val success 0.817
+[bc seed 2] epoch 19 loss 0.361 val success 0.827
+[bc seed 1] epoch 36 loss 0.191 val success 0.823
+[bc seed 2] epoch 20 loss 0.347 val success 0.823
+[bc seed 2] epoch 21 loss 0.336 val success 0.830
+[bc seed 1] epoch 37 loss 0.182 val success 0.827
+[bc seed 2] epoch 22 loss 0.327 val success 0.820
+[bc seed 1] epoch 38 loss 0.172 val success 0.810
+[bc seed 2] epoch 23 loss 0.315 val success 0.813
+[bc seed 2] epoch 24 loss 0.300 val success 0.813
+[bc seed 1] epoch 39 loss 0.165 val success 0.820
+[bc seed 2] epoch 25 loss 0.289 val success 0.810
+[ppo main seed 1] 2,457,600 steps  train success 0.880  val success 0.913  entropy 0.50  (556s)
+[bc seed 1] epoch 40 loss 0.156 val success 0.803
+[bc seed 2] epoch 26 loss 0.280 val success 0.847
+[bc seed 2] epoch 27 loss 0.267 val success 0.833
+[bc seed 1] epoch 41 loss 0.146 val success 0.817
+[bc seed 2] epoch 28 loss 0.258 val success 0.833
+[bc seed 1] epoch 42 loss 0.138 val success 0.820
+[bc seed 2] epoch 29 loss 0.249 val success 0.843
+[bc seed 1] epoch 43 loss 0.129 val success 0.827
+[bc seed 2] epoch 30 loss 0.239 val success 0.843
+[bc seed 2] epoch 31 loss 0.229 val success 0.817
+[ppo no_undo seed 1] 204,800 steps  train success 0.698  val success 0.713  entropy 0.94  (46s)
+[bc seed 1] epoch 44 loss 0.123 val success 0.827
+[bc seed 2] epoch 32 loss 0.220 val success 0.827
+[ppo main seed 2] 2,457,600 steps  train success 0.884  val success 0.903  entropy 0.51  (559s)
+[bc seed 1] epoch 45 loss 0.115 val success 0.823
+[bc seed 2] epoch 33 loss 0.208 val success 0.823
+[bc seed 2] epoch 34 loss 0.198 val success 0.837
+[bc seed 1] epoch 46 loss 0.110 val success 0.803
+[ppo main seed 0] 2,508,800 steps  train success 0.911  val success 0.910  entropy 0.50  (559s)
+[bc seed 2] epoch 35 loss 0.192 val success 0.823
+[ppo no_undo seed 2] 102,400 steps  train success 0.387  val success 0.420  entropy 1.39  (24s)
+[bc seed 1] epoch 47 loss 0.102 val success 0.823
+[bc seed 2] epoch 36 loss 0.182 val success 0.833
+[bc seed 1] epoch 48 loss 0.094 val success 0.817
+[bc seed 2] epoch 37 loss 0.170 val success 0.833
+[bc seed 1] epoch 49 loss 0.089 val success 0.817
+[bc seed 2] epoch 38 loss 0.162 val success 0.827
+[bc seed 2] epoch 39 loss 0.153 val success 0.833
+[bc seed 1] epoch 50 loss 0.083 val success 0.823
+[bc seed 2] epoch 40 loss 0.146 val success 0.823
+[bc seed 1] epoch 51 loss 0.078 val success 0.813
+[bc seed 2] epoch 41 loss 0.140 val success 0.827
+[bc seed 2] epoch 42 loss 0.131 val success 0.817
+[bc seed 1] epoch 52 loss 0.073 val success 0.820
+[bc seed 2] epoch 43 loss 0.122 val success 0.823
+[bc seed 1] epoch 53 loss 0.067 val success 0.830
+[bc seed 2] epoch 44 loss 0.118 val success 0.840
+[bc seed 1] epoch 54 loss 0.063 val success 0.820
+[bc seed 2] epoch 45 loss 0.110 val success 0.817
+[bc seed 1] epoch 55 loss 0.058 val success 0.833
+[bc seed 2] epoch 46 loss 0.101 val success 0.830
+[bc seed 1] epoch 56 loss 0.054 val success 0.830
+[bc seed 2] epoch 47 loss 0.095 val success 0.827
+[bc seed 1] epoch 57 loss 0.050 val success 0.827
+[bc seed 2] epoch 48 loss 0.089 val success 0.823
+[bc seed 1] epoch 58 loss 0.046 val success 0.817
+[bc seed 1] epoch 59 loss 0.043 val success 0.827
+[bc seed 2] epoch 49 loss 0.084 val success 0.830
+[bc seed 2] epoch 50 loss 0.079 val success 0.833
+[bc seed 1] epoch 60 loss 0.040 val success 0.830
+[bc seed 2] epoch 51 loss 0.073 val success 0.827
+[bc seed 2] epoch 52 loss 0.068 val success 0.820
+[bc seed 2] epoch 53 loss 0.064 val success 0.820
+[bc seed 2] epoch 54 loss 0.059 val success 0.810
+[bc seed 2] epoch 55 loss 0.055 val success 0.817
+[bc seed 2] epoch 56 loss 0.052 val success 0.820
+[bc seed 2] epoch 57 loss 0.049 val success 0.823
+[bc seed 2] epoch 58 loss 0.045 val success 0.833
+[bc seed 2] epoch 59 loss 0.041 val success 0.820
+[bc seed 2] epoch 60 loss 0.039 val success 0.810
+[ppo no_undo seed 1] 256,000 steps  train success 0.711  val success 0.767  entropy 0.84  (58s)
+[ppo main seed 1] 2,508,800 steps  train success 0.878  val success 0.920  entropy 0.53  (569s)
+[ppo main seed 2] 2,508,800 steps  train success 0.899  val success 0.900  entropy 0.53  (570s)
+[ppo no_undo seed 2] 153,600 steps  train success 0.541  val success 0.637  entropy 1.15  (34s)
+[ppo main seed 0] 2,560,000 steps  train success 0.855  val success 0.923  entropy 0.51  (570s)
+[ppo main seed 1] 2,560,000 steps  train success 0.870  val success 0.910  entropy 0.51  (579s)
+[ppo no_undo seed 1] 307,200 steps  train success 0.745  val success 0.793  entropy 0.78  (68s)
+[ppo no_undo seed 2] 204,800 steps  train success 0.644  val success 0.733  entropy 0.94  (45s)
+[ppo main seed 2] 2,560,000 steps  train success 0.876  val success 0.900  entropy 0.53  (580s)
+[ppo main seed 0] 2,611,200 steps  train success 0.890  val success 0.940  entropy 0.49  (581s)
+[ppo no_undo seed 1] 358,400 steps  train success 0.764  val success 0.807  entropy 0.75  (79s)
+[ppo main seed 1] 2,611,200 steps  train success 0.895  val success 0.923  entropy 0.52  (590s)
+[ppo no_undo seed 2] 256,000 steps  train success 0.659  val success 0.750  entropy 0.87  (55s)
+[ppo main seed 2] 2,611,200 steps  train success 0.886  val success 0.917  entropy 0.50  (591s)
+[ppo main seed 0] 2,662,400 steps  train success 0.897  val success 0.940  entropy 0.47  (591s)
+[ppo no_undo seed 1] 409,600 steps  train success 0.779  val success 0.813  entropy 0.67  (90s)
+[ppo no_undo seed 2] 307,200 steps  train success 0.756  val success 0.793  entropy 0.73  (66s)
+[ppo main seed 1] 2,662,400 steps  train success 0.894  val success 0.923  entropy 0.48  (602s)
+[ppo main seed 2] 2,662,400 steps  train success 0.891  val success 0.903  entropy 0.52  (603s)
+[ppo main seed 0] 2,713,600 steps  train success 0.878  val success 0.930  entropy 0.54  (603s)
+[ppo no_undo seed 1] 460,800 steps  train success 0.812  val success 0.820  entropy 0.65  (100s)
+[ppo no_undo seed 2] 358,400 steps  train success 0.743  val success 0.780  entropy 0.70  (77s)
+[ppo main seed 1] 2,713,600 steps  train success 0.896  val success 0.927  entropy 0.47  (613s)
+[ppo main seed 2] 2,713,600 steps  train success 0.899  val success 0.913  entropy 0.47  (615s)
+[ppo main seed 0] 2,764,800 steps  train success 0.895  val success 0.930  entropy 0.53  (615s)
+[ppo no_undo seed 1] 512,000 steps  train success 0.799  val success 0.827  entropy 0.61  (112s)
+[ppo no_undo seed 2] 409,600 steps  train success 0.764  val success 0.773  entropy 0.67  (88s)
+[ppo main seed 1] 2,764,800 steps  train success 0.917  val success 0.913  entropy 0.49  (624s)
+[ppo main seed 2] 2,764,800 steps  train success 0.878  val success 0.897  entropy 0.51  (626s)
+[ppo main seed 0] 2,816,000 steps  train success 0.879  val success 0.927  entropy 0.51  (626s)
+[ppo no_undo seed 1] 563,200 steps  train success 0.760  val success 0.827  entropy 0.66  (123s)
+[ppo no_undo seed 2] 460,800 steps  train success 0.784  val success 0.823  entropy 0.64  (99s)
+[ppo main seed 1] 2,816,000 steps  train success 0.875  val success 0.930  entropy 0.52  (636s)
+[ppo main seed 2] 2,816,000 steps  train success 0.912  val success 0.920  entropy 0.49  (637s)
+[ppo main seed 0] 2,867,200 steps  train success 0.874  val success 0.927  entropy 0.51  (638s)
+[ppo no_undo seed 1] 614,400 steps  train success 0.812  val success 0.827  entropy 0.64  (134s)
+[ppo no_undo seed 2] 512,000 steps  train success 0.809  val success 0.817  entropy 0.61  (110s)
+[ppo main seed 1] 2,867,200 steps  train success 0.876  val success 0.927  entropy 0.51  (648s)
+[ppo main seed 2] 2,867,200 steps  train success 0.897  val success 0.910  entropy 0.49  (648s)
+[ppo main seed 0] 2,918,400 steps  train success 0.921  val success 0.933  entropy 0.49  (651s)
+[ppo no_undo seed 2] 563,200 steps  train success 0.778  val success 0.823  entropy 0.61  (121s)
+[ppo no_undo seed 1] 665,600 steps  train success 0.804  val success 0.833  entropy 0.61  (146s)
+[ppo main seed 2] 2,918,400 steps  train success 0.895  val success 0.917  entropy 0.47  (660s)
+[ppo main seed 1] 2,918,400 steps  train success 0.916  val success 0.913  entropy 0.47  (660s)
+[ppo main seed 0] 2,969,600 steps  train success 0.893  val success 0.937  entropy 0.49  (698s)
+[ppo no_undo seed 2] 614,400 steps  train success 0.807  val success 0.853  entropy 0.58  (165s)
+[ppo no_undo seed 1] 716,800 steps  train success 0.818  val success 0.867  entropy 0.61  (191s)
+[ppo main seed 2] 2,969,600 steps  train success 0.897  val success 0.910  entropy 0.48  (705s)
+[ppo main seed 0] 3,000,320 steps  train success 0.890  val success 0.940  entropy 0.50  (706s)
+[ppo main seed 1] 2,969,600 steps  train success 0.899  val success 0.917  entropy 0.48  (706s)
+[ppo main seed 2] 3,000,320 steps  train success 0.907  val success 0.910  entropy 0.47  (712s)
+[ppo no_undo seed 2] 665,600 steps  train success 0.805  val success 0.840  entropy 0.58  (178s)
+[ppo main seed 1] 3,000,320 steps  train success 0.887  val success 0.910  entropy 0.49  (714s)
+[ppo no_undo seed 1] 768,000 steps  train success 0.868  val success 0.860  entropy 0.57  (207s)
+[ppo no_undo seed 2] 716,800 steps  train success 0.801  val success 0.867  entropy 0.60  (189s)
+[ppo no_undo seed 1] 819,200 steps  train success 0.853  val success 0.873  entropy 0.58  (220s)
+[ppo no_undo seed 2] 768,000 steps  train success 0.826  val success 0.863  entropy 0.59  (201s)
+[ppo no_undo seed 1] 870,400 steps  train success 0.836  val success 0.867  entropy 0.57  (232s)
+[ppo no_undo seed 2] 819,200 steps  train success 0.823  val success 0.847  entropy 0.57  (212s)
+[ppo no_undo seed 1] 921,600 steps  train success 0.852  val success 0.863  entropy 0.56  (244s)
+[ppo no_undo seed 2] 870,400 steps  train success 0.818  val success 0.850  entropy 0.57  (223s)
+[ppo no_undo seed 1] 972,800 steps  train success 0.837  val success 0.877  entropy 0.57  (254s)
+[ppo no_undo seed 2] 921,600 steps  train success 0.843  val success 0.860  entropy 0.55  (234s)
+[ppo no_undo seed 1] 1,024,000 steps  train success 0.841  val success 0.870  entropy 0.54  (265s)
+[ppo no_undo seed 2] 972,800 steps  train success 0.859  val success 0.867  entropy 0.54  (245s)
+[ppo no_undo seed 1] 1,075,200 steps  train success 0.836  val success 0.867  entropy 0.58  (278s)
+[ppo no_undo seed 2] 1,024,000 steps  train success 0.814  val success 0.870  entropy 0.56  (257s)
+[ppo no_undo seed 1] 1,126,400 steps  train success 0.842  val success 0.853  entropy 0.56  (293s)
+[ppo no_undo seed 2] 1,075,200 steps  train success 0.829  val success 0.870  entropy 0.56  (270s)
+[ppo no_undo seed 1] 1,177,600 steps  train success 0.840  val success 0.893  entropy 0.57  (307s)
+[ppo no_undo seed 2] 1,126,400 steps  train success 0.813  val success 0.850  entropy 0.57  (286s)
+[ppo no_undo seed 1] 1,228,800 steps  train success 0.854  val success 0.877  entropy 0.57  (319s)
+[ppo no_undo seed 2] 1,177,600 steps  train success 0.852  val success 0.877  entropy 0.53  (297s)
+[ppo no_undo seed 1] 1,280,000 steps  train success 0.840  val success 0.893  entropy 0.55  (331s)
+[ppo no_undo seed 2] 1,228,800 steps  train success 0.849  val success 0.893  entropy 0.55  (309s)
+[ppo no_undo seed 1] 1,331,200 steps  train success 0.874  val success 0.880  entropy 0.52  (342s)
+[ppo no_undo seed 2] 1,280,000 steps  train success 0.843  val success 0.867  entropy 0.55  (320s)
+[ppo no_undo seed 1] 1,382,400 steps  train success 0.876  val success 0.880  entropy 0.54  (354s)
+[ppo no_undo seed 2] 1,331,200 steps  train success 0.844  val success 0.880  entropy 0.54  (333s)
+[ppo no_undo seed 1] 1,433,600 steps  train success 0.837  val success 0.883  entropy 0.57  (365s)
+[ppo no_undo seed 2] 1,382,400 steps  train success 0.848  val success 0.863  entropy 0.54  (344s)
+[ppo no_undo seed 1] 1,484,800 steps  train success 0.857  val success 0.880  entropy 0.54  (377s)
+[ppo no_undo seed 2] 1,433,600 steps  train success 0.864  val success 0.890  entropy 0.52  (355s)
+[ppo no_undo seed 1] 1,536,000 steps  train success 0.854  val success 0.880  entropy 0.54  (388s)
+[ppo no_undo seed 2] 1,484,800 steps  train success 0.862  val success 0.877  entropy 0.51  (366s)
+[ppo no_undo seed 1] 1,587,200 steps  train success 0.882  val success 0.867  entropy 0.53  (400s)
+[ppo no_undo seed 2] 1,536,000 steps  train success 0.850  val success 0.877  entropy 0.55  (379s)
+[ppo no_undo seed 1] 1,638,400 steps  train success 0.853  val success 0.873  entropy 0.53  (411s)
+[ppo no_undo seed 2] 1,587,200 steps  train success 0.874  val success 0.897  entropy 0.50  (390s)
+[ppo no_undo seed 1] 1,689,600 steps  train success 0.892  val success 0.877  entropy 0.53  (422s)
+[ppo no_undo seed 2] 1,638,400 steps  train success 0.866  val success 0.907  entropy 0.51  (401s)
+[ppo no_undo seed 1] 1,740,800 steps  train success 0.881  val success 0.877  entropy 0.52  (433s)
+[ppo no_undo seed 2] 1,689,600 steps  train success 0.864  val success 0.893  entropy 0.53  (412s)
+[ppo no_undo seed 1] 1,792,000 steps  train success 0.862  val success 0.900  entropy 0.56  (444s)
+[ppo no_undo seed 2] 1,740,800 steps  train success 0.851  val success 0.897  entropy 0.53  (424s)
+[ppo no_undo seed 1] 1,843,200 steps  train success 0.859  val success 0.873  entropy 0.54  (456s)
+[ppo no_undo seed 2] 1,792,000 steps  train success 0.841  val success 0.877  entropy 0.53  (436s)
+[ppo no_undo seed 1] 1,894,400 steps  train success 0.868  val success 0.880  entropy 0.53  (467s)
+[ppo no_undo seed 2] 1,843,200 steps  train success 0.854  val success 0.897  entropy 0.50  (447s)
+[ppo no_undo seed 1] 1,945,600 steps  train success 0.867  val success 0.907  entropy 0.52  (479s)
+[ppo no_undo seed 2] 1,894,400 steps  train success 0.887  val success 0.897  entropy 0.50  (458s)
+[ppo no_undo seed 1] 1,996,800 steps  train success 0.878  val success 0.897  entropy 0.51  (491s)
+[ppo no_undo seed 1] 2,000,896 steps  train success 0.873  val success 0.897  entropy 0.53  (492s)
+[ppo no_undo seed 2] 1,945,600 steps  train success 0.867  val success 0.893  entropy 0.52  (470s)
+[ppo no_undo seed 2] 1,996,800 steps  train success 0.877  val success 0.900  entropy 0.50  (482s)
+[ppo no_undo seed 2] 2,000,896 steps  train success 0.851  val success 0.900  entropy 0.54  (483s)
+
+$ /workspace/venv-sr/bin/python scripts/evaluate.py
+== main ==
+  random   success 0.044 [0.035, 0.054]  R 0.280  actions 6.37
+  planner  success 0.983 [0.977, 0.989]  R 0.912  actions 2.64
+  bc       success 0.823 [0.806, 0.839]  R 0.829  actions 3.42
+  ppo      success 0.893 [0.880, 0.905]  R 0.870  actions 2.98
+== deterministic ==
+  random   success 0.049 [0.038, 0.059]  R 0.286  actions 6.37
+  planner  success 1.000 [1.000, 1.000]  R 0.942  actions 1.85
+  bc       success 0.887 [0.869, 0.901]  R 0.877  actions 2.65
+  ppo      success 0.944 [0.932, 0.955]  R 0.909  actions 2.29
+== no_undo ==
+  random   success 0.041 [0.031, 0.051]  R 0.276  actions 6.24
+  planner  success 0.982 [0.976, 0.988]  R 0.912  actions 2.65
+  bc       success 0.821 [0.803, 0.836]  R 0.828  actions 3.41
+  ppo      success 0.863 [0.849, 0.877]  R 0.855  actions 3.07
+
+$ /workspace/venv-sr/bin/python scripts/make_figures.py
+figures written to /workspace/scene-repair/figures
+
+$ /workspace/venv-sr/bin/python scripts/make_episode_gif.py
+episode from test scene 0: 4 steps, R = 0.906
+
+Done in 18.1 minutes. See results/ and figures/.
