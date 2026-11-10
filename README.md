@@ -8,7 +8,7 @@ unreliable**: a legal move works 70% of the time, jitters to a nearby cell 20% o
 and does nothing 10% of the time. The only reward comes at the end:
 `R = s × (0.75 + 0.25 × budget_left / 8)`, where `s` is the share of goals met.
 
-**Full explanation of every file:** [`docs/code_guide.pdf`](docs/code_guide.pdf) (HTML version: `docs/code_guide.html`).
+
 
 ## Results (test set: 500 held-out scenes × 4 rollouts; BC and PPO pooled over 3 seeds)
 
